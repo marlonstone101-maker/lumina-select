@@ -129,6 +129,7 @@
       margin-bottom: 0.75rem;
       background: linear-gradient(135deg, #ffffff 0%, #94a3b8 100%);
       -webkit-background-clip: text;
+      background-clip: text;
       -webkit-text-fill-color: transparent;
     }
 
@@ -489,6 +490,20 @@
       color: #64748b;
       margin-top: 4rem;
     }
+    .disclosure-badge {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(8px);
+  padding: 8px 18px;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  color: #a0aec0;
+  max-width: 90%;
+  margin: 20px auto;
+  text-align: center;
+}
+
     .hero-header {
   position: relative;
   width: 100%;
@@ -558,10 +573,9 @@
   <p>Aesthetic workspace essentials, luxe audio, beauty, and daily carry hand-picked for effortless shopping.</p>
 </div>
 </header>
-      <strong>Affiliate Disclosure:</strong> As an Amazon Associate and affiliate partner, Easy-Select earns from
-      qualifying purchases made through links on this page at no extra cost to you.
-    </aside>
-  </div>
+      <div class="disclosure-badge">
+  <strong>Affiliate Disclosure:</strong> As an Amazon Associate and affiliate partner, Easy-Select earns from qualifying purchases made through links on this page at no extra cost to you.
+</div>
 
   <!-- Search & Category Filters -->
   <section class="controls-wrapper">
