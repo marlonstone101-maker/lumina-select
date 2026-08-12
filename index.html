@@ -537,29 +537,27 @@
   <!-- Header -->
   <header class="hero-header">
   <!-- Background Video -->
-  <video autoplay loop muted playsinline class="header-bg-video">
-    <source src="logo-video.mp4" type="video/mp4">
-  </video>
+<video autoplay loop muted playsinline id="bg-video" style="position: absolute; right: 0; bottom: 0; min-width: 100%; min-height: 100%; z-index: -1; object-fit: cover;">
+  <source src="Background%20vid.mp4" type="video/mp4">
+  <source src="Background vid.mp4" type="video/mp4">
+</video>
 
-  <!-- Overlay to darken video so white text stays readable -->
-  <div class="header-overlay"></div>
-
-  <!-- Header Content (Text & Branding on top) -->
-  <div class="header-content">
-    <div class="brand-container">
-      <a href="#" class="brand-logo">
-        <span class="brand-text">Easy<span class="brand-accent">-Select</span></span>
-      </a>
-    </div>
-    <span class="brand-tag">ELEVATED LIFESTYLE & DAILY ESSENTIALS</span>
-    <h1>Easy-Select</h1>
-    <p>Aesthetic workspace essentials, luxe audio, beauty, and daily carry hand-picked for effortless shopping.</p>
+<!-- Brand Logo & Header Content -->
+<div class="header-content">
+  <div class="brand-container">
+    <a href="#" class="brand-logo" style="display: flex !important; align-items: center !important; justify-content: center !important; gap: 10px !important;">
+      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: block !important; min-width: 36px; min-height: 36px;">
+        <rect x="3" y="3" width="18" height="18" rx="4" stroke="#e91e63" stroke-width="2.5"/>
+        <path d="M7 12l3 3 7-7" stroke="#e91e63" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span class="brand-text">Easy<span class="brand-accent">-Select</span></span>
+    </a>
   </div>
+  <span class="brand-tag">ELEVATED LIFESTYLE & DAILY ESSENTIALS</span>
+  <h1>Easy-Select</h1>
+  <p>Aesthetic workspace essentials, luxe audio, beauty, and daily carry hand-picked for effortless shopping.</p>
+</div>
 </header>
-
-  <!-- Mandatory FTC Disclosure Banner -->
-  <div class="ftc-wrapper">
-    <aside class="ftc-banner">
       <strong>Affiliate Disclosure:</strong> As an Amazon Associate and affiliate partner, Easy-Select earns from
       qualifying purchases made through links on this page at no extra cost to you.
     </aside>
@@ -572,7 +570,7 @@
         autocomplete="off">
     </div>
 
-    <nav class="filter-bar">
+    <nav class="filter-bar"> 
       <button class="filter-btn active" data-filter="all">All Collection</button>
       <button class="filter-btn" data-filter="phones">Phones & Accessories</button>
       <button class="filter-btn" data-filter="headphones">Headphones</button>
