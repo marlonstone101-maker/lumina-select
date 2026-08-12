@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ren Don Variety's | Self-Care & Beauty</title>
+    <style>
+        :root {
+            --purple: #8A2BE2;
+            --purple-dark: #6a1bb2;
+            --black: #121212;
+            --white: #ffffff;
+            --gray-light: #f8f9fa;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--gray-light);
+            color: var(--black);
+        }
+
+        /* Header / Nav */
+        header {
+            background-color: var(--white);
+            border-bottom: 2px solid var(--purple);
+            padding: 15px 20px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        header h1 {
+            color: var(--purple);
+            font-size: 1.6rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        header p {
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 4px;
+        }
+
+        /* Banner */
+        .hero {
+            background: linear-gradient(135deg, var(--black), #2a2a2a);
+            color: var(--white);
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .hero h2 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            color: #ddd;
+            font-size: 0.95rem;
+            max-width: 600px;
+            margin: 0 auto 20px;
+        }
+
+        .badge {
+            background-color: var(--purple);
+            color: var(--white);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            display: inline-block;
+        }
+
+        /* Product Section */
+        .container {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+            color: var(--black);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            width: 50px;
+            height: 3px;
+            background-color: var(--purple);
+            display: block;
+            margin: 8px auto 0;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border: 1px solid #eee;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .card-body {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            color: var(--black);
+        }
+
+        .card-desc {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 15px;
+            flex-grow: 1;
+        }
+
+        .btn-whatsapp {
+            background-color: var(--purple);
+            color: var(--white);
+            text-decoration: none;
+            text-align: center;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: bold;
+            display: block;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn-whatsapp:hover {
+            background-color: var(--purple-dark);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--black);
+            color: var(--white);
+            text-align: center;
+            padding: 25px 20px;
+            margin-top: 50px;
+            font-size: 0.85rem;
+        }
+
+        footer p {
+            margin-bottom: 8px;
+            color: #aaa;
+        }
+
+        footer strong {
+            color: var(--white);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <img src="logo.jpg" alt="Ren Don Variety's Logo" style="max-width: 140px; height: auto; border-radius: 50%; display: block; margin: 0 auto 8px;">
+        <p>Where Self-Care Meets Style</p>
+    </header>
+
+    <section class="hero">
+        <span class="badge">Islandwide Delivery Available 🇯🇲</span>
+        <h2 style="margin-top: 15px;">Luxury Self-Care & Beauty Essentials</h2>
+        <p>Cluster lashes, personal care products, and stylish accessories crafted to boost your confidence.</p>
+    </section>
+
+    <main class="container">
+        <h3 class="section-title">Featured Products</h3>
+        
+        <div class="grid">
+            <!-- Product 1 -->
+            <div class="card">
+                <!-- Replace 'photo1.jpg' with the actual filename of their first image -->
+                <img src="photo1.jpg" alt="Luxe Foaming Body Wash">
+                <div class="card-body">
+                    <h4 class="card-title">Luxe Foaming Wash</h4>
+                    <p class="card-desc">Gentle, hydrating personal care wash designed to leave skin feeling refreshed and smooth.</p>
+                    <a href="https://wa.me/message/5OGTVZS5KXJZI1?text=Hi%2C%20I%20would%20like%20to%20order%20the%20Luxe%20Foaming%20Wash" class="btn-whatsapp" target="_blank">Order via WhatsApp</a>
+                </div>
+            </div>
+
+            <!-- Product 2 -->
+            <div class="card">
+                <!-- Replace 'photo2.jpg' with the actual filename of their second image -->
+                <img src="photo2.jpg" alt="Nourishing Body Oil">
+                <div class="card-body">
+                    <h4 class="card-title">Nourishing Body Oil</h4>
+                    <p class="card-desc">Lightweight glow oil infused with essential ingredients to nourish and lock in moisture 24/7.</p>
+                    <a href="https://wa.me/message/5OGTVZS5KXJZI1?text=Hi%2C%20I%20would%20like%20to%20order%20the%20Nourishing%20Body%20Oil" class="btn-whatsapp" target="_blank">Order via WhatsApp</a>
+                </div>
+            </div>
+
+            <!-- Product 3 -->
+            <div class="card">
+                <!-- Replace 'photo3.jpg' with the actual filename of their third image -->
+                <img src="photo3.jpg" alt="Cluster Lash Extensions">
+                <div class="card-body">
+                    <h4 class="card-title">Cluster Lash Extensions</h4>
+                    <p class="card-desc">Premium cluster lashes for a dramatic or natural look. Easy application, long-lasting wear.</p>
+                    <a href="https://wa.me/message/5OGTVZS5KXJZI1?text=Hi%2C%20I%20would%20like%20to%20order%20the%20Cluster%20Lashes" class="btn-whatsapp" target="_blank">Order via WhatsApp</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p><strong>Ren Don Variety's</strong> — Kingston, Jamaica</p>
+        <p>Islandwide Delivery | Orders Processed via WhatsApp</p>
+    </footer>
+
+</body>
+</html>

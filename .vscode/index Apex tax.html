@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Apex Tax Advisory | Professional Tax & Accounting Services</title>
+  <style>
+    /* Modern Financial Palette */
+    :root {
+      --primary: #0F172A;      /* Deep Slate / Charcoal */
+      --secondary: #1E293B;    /* Medium Dark Slate */
+      --accent: #D97706;       /* Warm Gold Accent */
+      --accent-hover: #B45309; /* Deep Gold */
+      --bg-light: #F8FAFC;     /* Off-White Background */
+      --card-bg: #FFFFFF;      /* Pure White */
+      --text: #334155;          /* Body Text */
+      --border: #E2E8F0;      /* Soft Border */
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      color: var(--text);
+      background-color: var(--bg-light);
+      line-height: 1.6;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* Header & Navigation */
+    header {
+      background-color: var(--card-bg);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .navbar {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 2rem;
+    }
+
+    .logo {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--primary);
+      letter-spacing: -0.5px;
+    }
+
+    .logo span {
+      color: var(--accent);
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .nav-links a {
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--accent);
+    }
+
+    .btn-nav {
+      background-color: var(--accent);
+      color: #FFFFFF !important;
+      padding: 0.6rem 1.2rem;
+      border-radius: 6px;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+
+    .btn-nav:hover {
+      background-color: var(--accent-hover);
+    }
+
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(135deg, var(--primary) 0%, #020617 100%);
+      color: #FFFFFF;
+      padding: 6rem 2rem;
+      text-align: center;
+    }
+
+    .hero-content {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      margin-bottom: 1.2rem;
+      line-height: 1.2;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      margin-bottom: 2.5rem;
+      opacity: 0.85;
+      font-weight: 300;
+    }
+
+    .btn-hero {
+      background-color: var(--accent);
+      color: #FFFFFF;
+      padding: 0.9rem 2.2rem;
+      border-radius: 6px;
+      font-size: 1.05rem;
+      font-weight: 600;
+      display: inline-block;
+      transition: all 0.2s;
+    }
+
+    .btn-hero:hover {
+      background-color: var(--accent-hover);
+      transform: translateY(-2px);
+    }
+
+    /* Main Layout */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 5rem 2rem;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 2.2rem;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+      font-weight: 700;
+    }
+
+    .section-subtitle {
+      text-align: center;
+      color: #64748B;
+      margin-bottom: 3rem;
+      font-size: 1.05rem;
+    }
+
+    /* Services Grid */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2rem;
+    }
+
+    .service-card {
+      background: var(--card-bg);
+      padding: 2.5rem 2rem;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+      transition: all 0.2s;
+    }
+
+    .service-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+    }
+
+    .service-icon {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      display: inline-block;
+    }
+
+    .service-card h3 {
+      color: var(--primary);
+      margin-bottom: 0.75rem;
+      font-size: 1.25rem;
+    }
+
+    /* Interactive Calculator Section */
+    .calculator-section {
+      background-color: #FFFFFF;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 5rem 0;
+    }
+
+    .calculator-box {
+      background-color: var(--bg-light);
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      padding: 2.5rem;
+      max-width: 650px;
+      margin: 0 auto;
+    }
+
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--primary);
+    }
+
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 0.8rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 1rem;
+      background-color: #FFFFFF;
+    }
+
+    .calc-btn {
+      width: 100%;
+      background-color: var(--primary);
+      color: #FFFFFF;
+      border: none;
+      padding: 0.9rem;
+      border-radius: 6px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .calc-btn:hover {
+      background-color: var(--secondary);
+    }
+
+    .result-box {
+      margin-top: 1.5rem;
+      padding: 1.5rem;
+      background-color: #FEF3C7;
+      border: 1px solid #FCD34D;
+      border-radius: 8px;
+      display: none;
+      text-align: center;
+    }
+
+    .result-box h4 {
+      color: #78350F;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      margin-bottom: 0.25rem;
+    }
+
+    .result-box p {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    /* Upload & Consultation Portal */
+    .portal-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      background-color: var(--card-bg);
+      padding: 3rem;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+    }
+
+    .portal-info h3 {
+      font-size: 1.6rem;
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+
+    .info-item {
+      margin-bottom: 1.5rem;
+    }
+
+    .info-item h4 {
+      color: var(--primary);
+      font-size: 1rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .upload-zone {
+      border: 2px dashed var(--border);
+      border-radius: 8px;
+      padding: 2rem;
+      text-align: center;
+      background-color: var(--bg-light);
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+
+    .upload-zone:hover {
+      border-color: var(--accent);
+    }
+
+    .upload-zone input[type="file"] {
+      display: none;
+    }
+
+    .file-preview {
+      margin-top: 0.75rem;
+      font-size: 0.85rem;
+      color: var(--accent-hover);
+      font-weight: 600;
+    }
+
+    /* Footer */
+    footer {
+      background-color: var(--primary);
+      color: #FFFFFF;
+      padding: 3rem 0 2rem 0;
+      text-align: center;
+    }
+
+    footer p {
+      opacity: 0.7;
+      font-size: 0.9rem;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .navbar { flex-direction: column; gap: 1rem; }
+      .nav-links { flex-direction: column; gap: 1rem; }
+      .portal-container { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 2.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header>
+    <nav class="navbar">
+      <div class="logo">
+        APEX <span>TAX ADVISORY</span>
+      </div>
+      <ul class="nav-links">
+        <li><a href="#services">Services</a></li>
+        <li><a href="#calculator">Estimator</a></li>
+        <li><a href="#portal">Document Upload</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="#portal" class="btn-nav">Book Consultation</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Seamless Tax Filing & Financial Advisory</h1>
+      <p>Maximizing deductions, maintaining full tax compliance, and managing financial returns for individuals and growing businesses.</p>
+      <a href="#portal" class="btn-hero">Get Started Today</a>
+    </div>
+  </section>
+
+  <!-- Services Section -->
+  <section id="services" class="container">
+    <h2 class="section-title">Our Practice Areas</h2>
+    <p class="section-subtitle">Tailored tax solutions designed to protect your assets and simplify filing.</p>
+    
+    <div class="services-grid">
+      <div class="service-card">
+        <span class="service-icon">📊</span>
+        <h3>Personal Tax Filing</h3>
+        <p>Comprehensive preparation for employees, sole traders, and individuals to secure maximum eligible returns.</p>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">🏢</span>
+        <h3>Corporate & Business Tax</h3>
+        <p>Strategic tax planning, compliance management, and corporate returns designed for small to mid-sized businesses.</p>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">💼</span>
+        <h3>Payroll & Indirect Tax</h3>
+        <p>End-to-end management of monthly payroll deductions, sales taxes, and statutory compliance schedules.</p>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">🛡️</span>
+        <h3>Tax Audit & Advisory</h3>
+        <p>Professional representation during tax authority reviews, dispute resolutions, and compliance certification.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Estimator Section -->
+  <section id="calculator" class="calculator-section">
+    <div class="container" style="padding: 0 2rem;">
+      <h2 class="section-title">Quick Tax Estimator</h2>
+      <p class="section-subtitle">A quick tool for clients to estimate potential tax obligations or refunds.</p>
+      
+      <div class="calculator-box">
+        <form id="taxCalcForm">
+          <div class="form-group">
+            <label for="filingType">Filing Status</label>
+            <select id="filingType" required>
+              <option value="individual">Individual / Sole Proprietor</option>
+              <option value="business">Registered Business / Partnership</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="grossIncome">Gross Annual Revenue / Income ($)</label>
+            <input type="number" id="grossIncome" placeholder="e.g. 85000" required>
+          </div>
+
+          <div class="form-group">
+            <label for="taxPaid">Taxes Already Paid / Withheld ($)</label>
+            <input type="number" id="taxPaid" placeholder="e.g. 12000" required>
+          </div>
+
+          <button type="submit" class="calc-btn">Calculate Estimate</button>
+        </form>
+
+        <div id="calcResult" class="result-box">
+          <h4>Estimated Outcome</h4>
+          <p id="calcAmount">$0.00</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Upload & Contact Section -->
+  <section id="portal" class="container">
+    <h2 class="section-title">Client File Intake</h2>
+    <p class="section-subtitle">Securely send tax documents directly to our processing team.</p>
+    
+    <div class="portal-container">
+      <div class="portal-info">
+        <h3>Contact & Office Info</h3>
+        <p style="color: #64748B; margin-bottom: 2rem;">Reach out directly or drop off documents electronically using our encrypted intake portal.</p>
+        
+        <div class="info-item">
+          <h4>Direct Phone</h4>
+          <p>(800) 555-0199</p>
+        </div>
+        <div class="info-item">
+          <h4>Email Inquiries</h4>
+          <p>contact@apextaxadvisory.com</p>
+        </div>
+        <div class="info-item">
+          <h4>Office Address</h4>
+          <p>45 Financial Plaza, Suite 300<br>Corporate Centre</p>
+        </div>
+      </div>
+
+      <div>
+        <form id="intakeForm">
+          <div class="form-group">
+            <label for="clientName">Full Name / Business Name</label>
+            <input type="text" id="clientName" required placeholder="John Doe">
+          </div>
+
+          <div class="form-group">
+            <label for="clientEmail">Email Address</label>
+            <input type="email" id="clientEmail" required placeholder="john@example.com">
+          </div>
+
+          <div class="form-group">
+            <label>Attach Financial Documents</label>
+            <div class="upload-zone" onclick="document.getElementById('fileUpload').click()">
+              📁 Click to Select Files (W-2, Statements, Records)
+              <input type="file" id="fileUpload" multiple onchange="updateFilePreview(this)">
+              <div id="fileListDisplay" class="file-preview"></div>
+            </div>
+          </div>
+
+          <button type="submit" class="calc-btn" style="background-color: var(--accent);">Submit Files</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2026 Apex Tax Advisory. All Rights Reserved. | Demo Site Prepared by Client Web Development Services</p>
+  </footer>
+
+  <!-- JavaScript Logic -->
+  <script>
+    // Tax Calculation Logic
+    document.getElementById('taxCalcForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const income = parseFloat(document.getElementById('grossIncome').value);
+      const paid = parseFloat(document.getElementById('taxPaid').value);
+      const type = document.getElementById('filingType').value;
+
+      // Base tax estimate logic (~15% effective tax rate assumption)
+      const estimatedLiability = income * 0.15;
+      const difference = paid - estimatedLiability;
+
+      const resultBox = document.getElementById('calcResult');
+      const amountText = document.getElementById('calcAmount');
+
+      resultBox.style.display = 'block';
+
+      if (difference >= 0) {
+        amountText.textContent = +$${difference.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})} (Refund);
+        amountText.style.color = '#059669';
+      } else {
+        amountText.textContent = -$${Math.abs(difference).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})} (Balance Due);
+        amountText.style.color = '#DC2626';
+      }
+    });
+
+    // Document Preview
+    function updateFilePreview(input) {
+      const display = document.getElementById('fileListDisplay');
+      if (input.files.length > 0) {
+        const names = Array.from(input.files).map(f => f.name).join(', ');
+        display.textContent = Selected (${input.files.length}): ${names};
+      } else {
+        display.textContent = '';
+      }
+    }
+
+    // Intake Form Submission
+    document.getElementById('intakeForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      alert('Documents submitted successfully. A confirmation email has been sent to your inbox.');
+      this.reset();
+      document.getElementById('fileListDisplay').textContent = '';
+    });
+  </script>
+</body>
+</html>
