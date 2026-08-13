@@ -9,10 +9,12 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
-    body { font-family: 'Plus Jakarta Sans', sans-serif; }
-    .hide-scrollbar::-webkit-scrollbar { display: none; }
-    .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-  </style>
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Plus Jakarta Sans', sans-serif; }
+  .hide-scrollbar::-webkit-scrollbar { display: none; }
+  .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+</style>
+   
 </head>
 <body class="bg-black text-white antialiased selection:bg-amber-400 selection:text-black">
 
@@ -44,13 +46,13 @@
 
       <!-- Navigation Links (Desktop) -->
       <nav class="hidden lg:flex items-center gap-8 text-sm font-medium tracking-wide text-zinc-300">
-        <a href="#trending" class="hover:text-amber-400 transition-colors">Top Trends</a>
-        <a href="#women" class="hover:text-amber-400 transition-colors">Women</a>
-        <a href="#men" class="hover:text-amber-400 transition-colors">Men</a>
-        <a href="#kids" class="hover:text-amber-400 transition-colors">Kids</a>
-        <a href="#kitchen" class="hover:text-amber-400 transition-colors">Kitchen & Dining</a>
-        <a href="#audio" class="hover:text-amber-400 transition-colors">Audio</a>
-        <a href="#phones" class="hover:text-amber-400 transition-colors">Phones & Accessories</a>
+        <a href="#search-section" onclick="filterCategory('trending')" class="cat-btn hover:text-amber-400 transition-colors">Top Trends</a>
+        <a href="#search-section" onclick="filterCategory('women')" class="cat-btn hover:text-amber-400 transition-colors">Women</a>
+<a href="#search-section" onclick="filterCategory('men')" class="cat-btn hover:text-amber-400 transition-colors">Men</a>
+<a href="#search-section" onclick="filterCategory('kids')" class="cat-btn hover:text-amber-400 transition-colors">Kids</a>
+<a href="#search-section" onclick="filterCategory('kitchen')" class="cat-btn hover:text-amber-400 transition-colors">Kitchen</a>
+<a href="#search-section" onclick="filterCategory('audio')" class="cat-btn hover:text-amber-400 transition-colors">Audio</a>
+<a href="#search-section" onclick="filterCategory('phones')" class="cat-btn hover:text-amber-400 transition-colors">Phones</a>
       </nav>
 
       <!-- Mobile Menu Button & Search Trigger -->
@@ -98,10 +100,10 @@
       </p>
 
       <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto justify-center px-4">
-        <a href="#trending" class="bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 text-black font-extrabold uppercase tracking-wider text-xs sm:text-sm px-8 py-4 sm:py-5 rounded-xl shadow-xl hover:scale-[1.02] transition-all text-center">
+        <a href="#trending-section" class="bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 text-black font-extrabold uppercase tracking-wider text-xs sm:text-sm px-8 py-4 sm:py-5 rounded-xl shadow-xl hover:scale-[1.02] transition-all text-center">
           Explore Top Trends
         </a>
-        <a href="#women" class="bg-zinc-900 hover:bg-zinc-800 text-white font-semibold uppercase tracking-wider text-xs sm:text-sm px-8 py-4 sm:py-5 rounded-xl border border-zinc-800 transition-all text-center">
+        <a href="#search-section" class="bg-zinc-900 hover:bg-zinc-800 text-white font-semibold uppercase tracking-wider text-xs sm:text-sm px-8 py-4 sm:py-5 rounded-xl border border-zinc-800 transition-all text-center">
           Browse Collections
         </a>
       </div>
@@ -142,7 +144,7 @@
 
       <!-- Search Input Bar -->
       <div class="relative w-full md:w-64">
-        <input type="text" id="searchInput" onkeyup="searchProducts()" placeholder="Search catalog..." class="w-full bg-zinc-900 border border-zinc-800 rounded-full px-4 py-2 text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-amber-400">
+        <input type="text" id="searchInput" onkeyup="searchProducts()" placeholder="Search catalog..." class="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-4 py-3 text-white placeholder-zinc-500 text-sm focus:outline-none focus:border-amber-400 transition-colors">
       </div>
     </div>
   </div>
@@ -155,24 +157,24 @@
   </div>
 
   <!-- Main Product Showcase Grid -->
-  <main class="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+  <main id="trending-section" class="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
     <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
       
       <!-- Product Card 1 -->
       <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="women trending">
         <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Trend</div>
         <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=800&q=80" alt="Women Luxury Wear" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+          <img src="https://img.ltwebstatic.com/v4/j/pi/2026/02/24/8b/17719249799d625e773d507fbb963898b0b91bdbaa.jpg" alt="Women Outfit" onclick="openLightbox(this)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
         </div>
         <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
           <div>
             <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Women Collection</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">Haute Couture Evening Ensemble</h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">Exquisite silhouette tailored for high-end galas and sophisticated affairs.</p>
+            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">Slaydiva Women's Slim Fit White And Burgundy Jumpsuit</h3>
+            <p class="text-xs text-zinc-400 mt-2 font-light">Slaydiva Women's Slim Fit White And Burgundy Jumpsuit,Short Sleeve Half-Open Placket Label Webbing Romper,Summer Cow Boy Gym Club Street Style Outfit.</p>
           </div>
           <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$149.99</span>
-            <a href="https://amazon.com" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
+            <span class="text-base sm:text-lg font-black text-white">$10.47</span>
+            <a href="https://onelink.shein.com/47/5ys6r44pqzpb" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
               Secure Deal
             </a>
           </div>
@@ -180,20 +182,20 @@
       </div>
 
       <!-- Product Card 2 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="men trending">
+      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="women trending">
         <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Trending Pick</div>
         <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://images.unsplash.com/photo-1617137984095-74e4e5e3613f?auto=format&fit=crop&w=800&q=80" alt="Men Luxury Suit" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+          <img src="https://img.ltwebstatic.com/v4/j/spmp/2026/04/07/74/1775530193c84d85f8780b722248a4b69844228d73.jpg" alt="women Outfit" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
         </div>
         <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
           <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Men Collection</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">Italian Tailored Executive Blazer</h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">Impeccably cut wool blend engineered for the modern boardroom icon.</p>
+            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Women Collection</span>
+            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">Elegant Plus-Size Women's Set</h3>
+            <p class="text-xs text-zinc-400 mt-2 font-light">Elegant Plus-Size Women's Set With 'Sturdy Thighs And Beautiful Eyes' Print, T-Shirt And Shorts Two-Piece – Soft, Comfortable, And Stylish</p>
           </div>
           <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$220.00</span>
-            <a href="https://amazon.com" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
+            <span class="text-base sm:text-lg font-black text-white">$5.13</span>
+            <a href="https://onelink.shein.com/47/5ys67pnruv8o" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
               Secure Deal
             </a>
           </div>
@@ -201,20 +203,20 @@
       </div>
 
       <!-- Product Card 3 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="phones trending">
+      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="women trending">
         <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Trend</div>
         <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://images.unsplash.com/photo-1544441893-675973e31985?auto=format&fit=crop&w=800&q=80" alt="Mobile Accessories" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+          <img src="https://img.ltwebstatic.com/v4/j/pi/2026/08/04/64/178583091162a687c9d5fcfff1c4424a5331ab4904.jpg" alt="Women Outfit" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
         </div>
         <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
           <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Phones & Accessories</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">Titanium MagSafe Protective Case</h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">Aerospace-grade metallic defense built with effortless magnetic alignment.</p>
+            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">women Collection</span>
+            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">Rovax Women's Street Fashion Distressed</h3>
+            <p class="text-xs text-zinc-400 mt-2 font-light">Rovax Women's Street Fashion Distressed Short Sleeve Crew Neck Top And Pocket Shorts Denim Effect 2 Pieces Set.</p>
           </div>
           <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$49.99</span>
-            <a href="https://amazon.com" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
+            <span class="text-base sm:text-lg font-black text-white">$13.67</span>
+            <a href="https://onelink.shein.com/47/5ys0pd2x9p4b" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
               Secure Deal
             </a>
           </div>
@@ -222,19 +224,19 @@
       </div>
 
       <!-- Product Card 4 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="audio">
+      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="women trending">
         <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=800&q=80" alt="Headphones" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+          <img src="https://img.ltwebstatic.com/v4/j/pi/2026/06/24/dd/178227154681102c405d12abb375edbcb84467c56a.jpg" alt="Women Outfit" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
         </div>
         <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
           <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Audio Collection</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">Studio Master ANC Wireless Headphones</h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">Immersive acoustic tuning wrapped in genuine lambskin leather cushioning.</p>
+            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">women Collection</span>
+            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">Slaydiva 2026 Spring/Summer 90s Street Style</h3>
+            <p class="text-xs text-zinc-400 mt-2 font-light">Slaydiva 2026 Spring/Summer 90s Street Style Slim Fit Mesh Floral Print Ruffled Top + Faux Knit Fringe Skirt Women Two Pieces Set Club Night Out Party Burgundy.</p>
           </div>
           <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$299.00</span>
-            <a href="https://amazon.com" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
+            <span class="text-base sm:text-lg font-black text-white">$10.65</span>
+            <a href="https://onelink.shein.com/47/5ys5453gj8y6" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
               Secure Deal
             </a>
           </div>
@@ -242,19 +244,19 @@
       </div>
 
       <!-- Product Card 5 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="kitchen">
+      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="women">
         <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=800&q=80" alt="Kitchenware" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+          <img src="https://img.ltwebstatic.com/v4/j/pi/2026/05/19/89/177919911638f855650bd96c39dace52d62e9bab30.jpg" alt="Women Outfit" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
         </div>
         <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
           <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Kitchen & Dining</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">Artisan Gold-Trimmed Ceramic Dinnerware</h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">Hand-glazed porcelain service designed for high-end culinary presentations.</p>
+            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Women Collection</span>
+            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">Bellisia Plus Size Women Metal Decor Halter Tankini Top And Shorts Swimwear Set</h3>
+            <p class="text-xs text-zinc-400 mt-2 font-light">Bellisia Plus Size Women Metal Decor Halter Tankini Top And Shorts Swimwear Set, Suitable For Summer Vacation And Beach.</p>
           </div>
           <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$129.00</span>
-            <a href="https://amazon.com" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
+            <span class="text-base sm:text-lg font-black text-white">$15.09</span>
+            <a href="https://onelink.shein.com/47/5ys7n2fqezbq" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
               Secure Deal
             </a>
           </div>
@@ -262,19 +264,19 @@
       </div>
 
       <!-- Product Card 6 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="kids">
+      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="women">
         <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://images.unsplash.com/photo-1519457431-44ccd64a579b?auto=format&fit=crop&w=800&q=80" alt="Kids Collection" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+          <img src="https://img.ltwebstatic.com/v4/j/pi/2025/11/12/2f/17629131192e1fecbd306c8d835fb9254abd37f106.jpg" alt="Women Collection" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
         </div>
         <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
           <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Kids Collection</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">Luxe Organic Cotton Junior Wardrobe Set</h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">Ultra-soft, hypoallergenic fabrics crafted for ultimate comfort and elegance.</p>
+            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Women Collection</span>
+            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">Floral Print Shirt And Pants Set</h3>
+            <p class="text-xs text-zinc-400 mt-2 font-light">SHEIN Clasi 2pcs Women Elegant Commuter Floral Print Shirt And Pants Set.</p>
           </div>
           <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$65.00</span>
-            <a href="https://amazon.com" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
+            <span class="text-base sm:text-lg font-black text-white">225.09</span>
+            <a href="https://onelink.shein.com/47/5ysa5i0qa7tl" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
               Secure Deal
             </a>
           </div>
@@ -347,7 +349,7 @@
       const cards = document.querySelectorAll('.product-card');
       cards.forEach(card => {
         const categories = card.getAttribute('data-category');
-        if (category === 'all' || categories.includes(category)) {
+        if (category === 'all' || categories.split(' ').includes(category)) {
           card.style.display = 'flex';
         } else {
           card.style.display = 'none';
@@ -367,6 +369,32 @@
         }
       });
     }
-  </script>
+    // Lightbox Functions
+  function openLightbox(imgElement) {
+    let modal = document.getElementById('imageModal');
+    let modalImg = document.getElementById('lightboxImg');
+    modal.style.display = "flex";
+    modalImg.src = imgElement.src;
+  }
+
+  function closeLightbox() {
+    document.getElementById('imageModal').style.display = "none";
+  }
+    // Automatically make all product images open in the lightbox
+  document.querySelectorAll('#productGrid img').forEach(img => {
+    img.classList.add('cursor-pointer');
+    img.onclick = function() {
+      openLightbox(this);
+    };
+  });
+</script>
+
+  <!-- Lightbox Modal -->
+<div id="imageModal" onclick="closeLightbox()" class="fixed inset-0 z-50 bg-black/90 hidden items-center justify-center p-4 cursor-pointer">
+  <div class="relative max-w-4xl max-h-[90vh]">
+    <img id="lightboxImg" src="" class="max-w-full max-h-[85vh] object-contain rounded-xl border border-zinc-800">
+    <button onclick="closeLightbox()" class="absolute top-4 right-4 text-white bg-zinc-800 hover:bg-zinc-700 rounded-full w-10 h-10 flex items-center justify-center text-xl font-bold">&times;</button>
+  </div>
+</div>
 </body>
 </html>
