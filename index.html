@@ -1,2056 +1,272 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Easy-Select | Luxury Curated Store</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <style>
-  html { scroll-behavior: smooth; }
-  body { font-family: 'Plus Jakarta Sans', sans-serif; }
-  .hide-scrollbar::-webkit-scrollbar { display: none; }
-  .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-</style>
-   
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop Easy Select</title>
+    <style>
+        :root {
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --text-main: #ffffff;
+            --text-muted: #a0a0a0;
+            --accent: #ffd700;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: Arial, sans-serif;
+        }
+
+        header {
+            text-align: center;
+            padding: 30px 20px;
+            background-color: #181818;
+            border-bottom: 1px solid #2a2a2a;
+        }
+
+        .logo-container img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--accent);
+        }
+
+        h1 {
+            margin: 10px 0 5px;
+            color: var(--accent);
+            font-size: 1.8rem;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin: 0;
+        }
+
+        .search-bar {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 12px 20px;
+            border-radius: 25px;
+            border: 1px solid #333;
+            background-color: #1e1e1e;
+            color: var(--text-main);
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #2a2a2a;
+        }
+
+        .card-img {
+            width: 100%;
+            height: 180px;
+            background: #202020;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        .card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.2s;
+        }
+
+        .card-img:hover img {
+            transform: scale(1.03);
+        }
+
+        .card-content {
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .card-title {
+            font-size: 1rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: var(--text-main);
+        }
+
+        .card-price {
+            font-size: 1.1rem;
+            color: var(--accent);
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .btn-buy {
+            display: block;
+            text-align: center;
+            background-color: var(--accent);
+            color: #000;
+            padding: 10px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: auto;
+        }
+
+        .btn-buy:hover {
+            opacity: 0.9;
+        }
+
+        /* Modal Viewer Styles */
+        #imageModal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        #imageModal img {
+            max-width: 90%;
+            max-height: 90vh;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+
+        #imageModal .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: #fff;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+    </style>
 </head>
-<body class="bg-black text-white antialiased selection:bg-amber-400 selection:text-black">
+<body>
 
-  <!-- Top Announcement Bar -->
-  <div class="bg-gradient-to-r from-zinc-900 via-zinc-800 to-zinc-900 border-b border-zinc-800 text-[11px] py-2 px-4 text-center tracking-widest uppercase text-amber-300 font-medium">
-    ✨ Global Curated Partners: Amazon & Shein Exclusive Collections
-  </div>
-
-  <!-- Luxury Sticky Navbar -->
-  <header class="sticky top-0 z-50 bg-black/95 backdrop-blur-md border-b border-zinc-900">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between">
-      
-      <!-- Clean Minimal Brand Logo Container -->
-      <a href="#" class="flex items-center gap-3.5 group">
-        <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-gradient-to-tr from-amber-400 via-amber-200 to-amber-500 p-[2px] shadow-[0_0_20px_rgba(251,191,36,0.25)] group-hover:scale-105 transition-transform">
-          <div class="w-full h-full bg-black rounded-full flex items-center justify-center">
-            <span class="text-amber-400 font-black text-lg tracking-tighter">ES</span>
-          </div>
+    <header>
+        <div class="logo-container">
+            <img src="logo.png" alt="Shop Easy Select Logo">
         </div>
-        <div class="flex flex-col">
-          <span class="text-base sm:text-xl font-extrabold tracking-wider uppercase bg-gradient-to-r from-amber-200 via-amber-400 to-amber-600 bg-clip-text text-transparent">
-            Easy-Select
-          </span>
-          <span class="text-[8px] sm:text-[9px] tracking-[0.2em] text-zinc-400 uppercase font-medium">
-            Elevated Lifestyle & Essentials
-          </span>
-        </div>
-      </a>
+        <h1>SHOP EASY SELECT</h1>
+        <p class="subtitle">Curated Deals & Top Recommendations</p>
+    </header>
 
-      <!-- Navigation Links (Desktop) -->
-      <nav class="hidden lg:flex items-center gap-8 text-sm font-medium tracking-wide text-zinc-300">
-        <a href="#search-section" onclick="filterCategory('trending')" class="cat-btn hover:text-amber-400 transition-colors">Top Trends</a>
-        <a href="#search-section" onclick="filterCategory('women')" class="cat-btn hover:text-amber-400 transition-colors">Women</a>
-<a href="#search-section" onclick="filterCategory('men')" class="cat-btn hover:text-amber-400 transition-colors">Men</a>
-<a href="#search-section" onclick="filterCategory('kids')" class="cat-btn hover:text-amber-400 transition-colors">Kids</a>
-<a href="#search-section" onclick="filterCategory('kitchen')" class="cat-btn hover:text-amber-400 transition-colors">Kitchen</a>
-<a href="#search-section" onclick="filterCategory('audio')" class="cat-btn hover:text-amber-400 transition-colors">Audio</a>
-<a href="#search-section" onclick="filterCategory('phones')" class="cat-btn hover:text-amber-400 transition-colors">Phones</a>
-      </nav>
-
-      <!-- Mobile Menu Button & Search Trigger -->
-      <div class="flex items-center gap-3">
-        <a href="#search-section" class="bg-zinc-900 border border-zinc-800 text-amber-400 p-2.5 rounded-full text-xs flex items-center justify-center">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-        </a>
-        <button onclick="toggleMobileMenu()" class="lg:hidden bg-zinc-900 border border-zinc-800 text-white p-2.5 rounded-full focus:outline-none">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/></svg>
-        </button>
-      </div>
-
+    <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Search curated products..." onkeyup="filterProducts()">
     </div>
 
-    <!-- Mobile Dropdown Menu -->
-    <div id="mobileMenu" class="hidden lg:hidden bg-zinc-950 border-b border-zinc-900 px-6 py-6 space-y-4">
-      <a href="#trending" onclick="toggleMobileMenu()" class="block text-sm font-semibold tracking-wider uppercase text-zinc-300 hover:text-amber-400">🔥 Top Trends</a>
-      <a href="#women" onclick="toggleMobileMenu()" class="block text-sm font-semibold tracking-wider uppercase text-zinc-300 hover:text-amber-400">Women Collection</a>
-      <a href="#men" onclick="toggleMobileMenu()" class="block text-sm font-semibold tracking-wider uppercase text-zinc-300 hover:text-amber-400">Men Collection</a>
-      <a href="#kids" onclick="toggleMobileMenu()" class="block text-sm font-semibold tracking-wider uppercase text-zinc-300 hover:text-amber-400">Kids Lifestyle</a>
-      <a href="#kitchen" onclick="toggleMobileMenu()" class="block text-sm font-semibold tracking-wider uppercase text-zinc-300 hover:text-amber-400">Kitchen & Dining</a>
-      <a href="#audio" onclick="toggleMobileMenu()" class="block text-sm font-semibold tracking-wider uppercase text-zinc-300 hover:text-amber-400">Audio Equipment</a>
-      <a href="#phones" onclick="toggleMobileMenu()" class="block text-sm font-semibold tracking-wider uppercase text-zinc-300 hover:text-amber-400">Phones & Accessories</a>
-    </div>
-  </header>
-
-  <!-- High-End Designer Hero Section -->
-  <section class="relative bg-gradient-to-b from-zinc-950 via-black to-zinc-950 py-20 sm:py-32 px-4 sm:px-6 overflow-hidden border-b border-zinc-900 text-center">
-    <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 sm:w-[600px] h-48 sm:h-[300px] bg-amber-500/10 blur-[120px] rounded-full pointer-events-none"></div>
-
-    <div class="max-w-5xl mx-auto relative z-10 flex flex-col items-center">
-      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-zinc-900/80 border border-amber-500/30 text-amber-300 text-[10px] sm:text-xs tracking-[0.2em] uppercase mb-6 backdrop-blur-md shadow-xl">
-        <span>✨</span> Maison Curated Collection — 2026 Edition
-      </div>
-
-      <h1 class="text-4xl sm:text-7xl md:text-8xl font-black tracking-tight uppercase mb-6 leading-[1.08]">
-        Uncompromising <br>
-        <span class="bg-gradient-to-r from-amber-200 via-amber-400 to-amber-600 bg-clip-text text-transparent">
-          Luxury & Style.
-        </span>
-      </h1>
-
-      <p class="text-zinc-400 text-sm sm:text-xl font-light max-w-2xl mb-10 leading-relaxed px-2">
-        Discover hand-selected global masterpieces from premium partners including Amazon and Shein. Redefine your aesthetic with elite craftsmanship.
-      </p>
-
-      <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto justify-center px-4">
-        <a href="#trending-section" class="bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 text-black font-extrabold uppercase tracking-wider text-xs sm:text-sm px-8 py-4 sm:py-5 rounded-xl shadow-xl hover:scale-[1.02] transition-all text-center">
-          Explore Top Trends
-        </a>
-        <a href="#search-section" class="bg-zinc-900 hover:bg-zinc-800 text-white font-semibold uppercase tracking-wider text-xs sm:text-sm px-8 py-4 sm:py-5 rounded-xl border border-zinc-800 transition-all text-center">
-          Browse Collections
-        </a>
-      </div>
-
-      <!-- Trust Metrics -->
-      <div class="grid grid-cols-3 gap-4 sm:gap-8 mt-16 pt-8 border-t border-zinc-900/80 text-center w-full max-w-3xl px-2">
-        <div>
-          <p class="text-xl sm:text-3xl font-black text-amber-400">100%</p>
-          <p class="text-[10px] sm:text-xs text-zinc-500 tracking-widest uppercase mt-1">Verified Quality</p>
-        </div>
-        <div>
-          <p class="text-xl sm:text-3xl font-black text-amber-400">Prime & Shein</p>
-          <p class="text-[10px] sm:text-xs text-zinc-500 tracking-widest uppercase mt-1">Trusted Partners</p>
-        </div>
-        <div>
-          <p class="text-xl sm:text-3xl font-black text-amber-400">VIP</p>
-          <p class="text-[10px] sm:text-xs text-zinc-500 tracking-widest uppercase mt-1">Experience</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Sticky Category Bar & Search -->
-  <div id="search-section" class="sticky top-20 z-40 bg-black/95 border-b border-zinc-900 py-3 sm:py-4 px-4 sm:px-6 backdrop-blur-md">
-    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3">
-      
-      <!-- Scrollable Category Pills -->
-      <div class="flex items-center gap-2 overflow-x-auto w-full md:w-auto hide-scrollbar pb-1 md:pb-0">
-        <button onclick="filterCategory('all')" class="cat-btn active bg-amber-400 text-black px-5 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all whitespace-nowrap shadow-md">All Collections</button>
-        <button onclick="filterCategory('trending')" class="cat-btn bg-zinc-900 hover:bg-zinc-800 text-zinc-300 border border-zinc-800 px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all whitespace-nowrap">🔥 Top Trends</button>
-        <button onclick="filterCategory('women')" class="cat-btn bg-zinc-900 hover:bg-zinc-800 text-zinc-300 border border-zinc-800 px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all whitespace-nowrap">Women</button>
-        <button onclick="filterCategory('men')" class="cat-btn bg-zinc-900 hover:bg-zinc-800 text-zinc-300 border border-zinc-800 px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all whitespace-nowrap">Men</button>
-        <button onclick="filterCategory('kids')" class="cat-btn bg-zinc-900 hover:bg-zinc-800 text-zinc-300 border border-zinc-800 px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all whitespace-nowrap">Kids</button>
-        <button onclick="filterCategory('kitchen')" class="cat-btn bg-zinc-900 hover:bg-zinc-800 text-zinc-300 border border-zinc-800 px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all whitespace-nowrap">Kitchen & Dining</button>
-        <button onclick="filterCategory('audio')" class="cat-btn bg-zinc-900 hover:bg-zinc-800 text-zinc-300 border border-zinc-800 px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all whitespace-nowrap">Audio</button>
-        <button onclick="filterCategory('phones')" class="cat-btn bg-zinc-900 hover:bg-zinc-800 text-zinc-300 border border-zinc-800 px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all whitespace-nowrap">Phones & Accessories</button>
-      </div>
-
-      <!-- Search Input Bar -->
-      <div class="relative w-full md:w-64">
-        <input type="text" id="searchInput" onkeyup="searchProducts()" placeholder="Search catalog..." class="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-4 py-3 text-white placeholder-zinc-500 text-sm focus:outline-none focus:border-amber-400 transition-colors">
-      </div>
-    </div>
-  </div>
-
-  <!-- Mandatory FTC Legal Disclosure -->
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4">
-    <aside class="bg-zinc-950 border border-zinc-900 p-3 sm:p-4 rounded-xl text-center text-zinc-400 text-[11px] sm:text-xs">
-      <strong class="text-amber-400 font-semibold uppercase">Affiliate Disclosure:</strong> As an Amazon Associate and affiliate partner, Easy-Select earns from qualifying purchases made through links on this page at no extra cost to you.
-    </aside>
-  </div>
-
-  <!-- Main Product Showcase Grid -->
-  <main id="trending-section" class="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
-    <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-   
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="audio">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Pick</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://m.media-amazon.com/images/I/51HbL1WS+KL._AC_SL1500_.jpg" alt="" onclick="openLightbox(this)" class="Soundcore P30i by Anker Noise Cancelling Earbuds">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Airbuds</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">Soundcore P30i by Anker Noise Cancelling Earbuds</h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">Soundcore P30i by Anker Noise Cancelling Earbuds, Hands-Free Viewing
-Strong and Smart Noise Cancelling, Powerful Bass, 45H Playtime, 2-in-1 Case and Phone Stand, IP54, Bluetooth 5.4</p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$26.99</span>
-            <a href="https://amzn.to/3SAOPSI" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-        </div>
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="audio">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Pick</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://m.media-amazon.com/images/I/51eSU48TgvL._AC_SL1500_.jpg" alt="" onclick="openLightbox(this)" class="2026 Completely Upgraded Version Earbuds Stereo in-Ear Headphones">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">String Airphones</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">2026 Completely Upgraded Version Earbuds Stereo in-Ear Headphones </h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">2026 Completely Upgraded Version Earbuds Stereo in-Ear Headphones 3-Year Warranty for Samsung Galaxy S25 S24 S23 S22 S21 S20, Note 10, 10+ with Microphone and Volume Remote Type-C Connector-Black</p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$26.98</span>
-            <a href="https://amzn.to/4qlDbYj" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-        </div>
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="audio">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Pick</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://m.media-amazon.com/images/I/51Z7h1Y0srL._AC_SL1500_.jpg" alt="" onclick="openLightbox(this)" class="Samsung Galaxy Buds 3-FE (2025)">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Airbuds</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">Samsung Galaxy Buds 3-FE (2025)</h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">Samsung Galaxy Buds 3-FE (2025) True Wireless Bluetooth Earbuds, Active Noise Cancellation, Clear Calls, Long Lasting Battery, Hands Free AI, Latin American Stock SM-R420NZKALTA </p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$76.99</span>
-            <a href="https://amzn.to/4xIBYwz" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-        </div>
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="audio">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Pick</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://m.media-amazon.com/images/I/61F0uZ-UNgL._AC_SL1500_.jpg" alt="" onclick="openLightbox(this)" class="Soundcore Anker P42i Wireless Earbuds">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Airbuds</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">Soundcore Anker P42i Wireless Earbuds </h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">Soundcore Anker P42i Wireless Earbuds with Adaptive ANC for Daily Noise
-Natural Mode for Concerts & Live Events, Hi-Res Audio with LDAC, 56H playtime, AI Clear Calls, Wireless Charging, IP55</p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$71.99</span>
-            <a href="https://amzn.to/3S6Z7Kf" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-        </div>
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="audio">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Pick</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://m.media-amazon.com/images/I/51Cl+s8HMXL._AC_SL1500_.jpg" alt="" onclick="openLightbox(this)" class="Samsung Galaxy Buds Core SM-R410">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Airbuds</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">Samsung Galaxy Buds Core SM-R410</h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">Samsung Galaxy Buds Core SM-R410 (2025) | Latin American Stock | Bluetooth 5.4 | Active Noise Cancelation | up to 35h Continuous Music Playblack</p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$43.50</span>
-            <a href="https://amzn.to/4bQx9cn" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-        </div>
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="audio">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Pick</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://img.ltwebstatic.com/v4/j/spmp/2026/01/27/ff/17694858525baefa883cdcae7167d084d0b8d6a9db_square.jpg" alt="" onclick="openLightbox(this)" class="2025 AI Translation Comfortable Headphones ">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Airbuds</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">2025 AI Translation Comfortable Headphones </h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">2025 AI Translation 144 Languages True Wireless New Design Clip-On Comfortable Headphones Business Sports Simple Headphones - Multi-Language Support, Smart Dual Mic Silent, Touch Control, Suitable For Android Phones, Perfect For Travel, Social, Learning, Sports - Movie And Game Themes</p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$6.62</span>
-            <a href="https://onelink.shein.com/48/5yz8foln1646" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-        </div>
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="audio">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Pick</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://img.ltwebstatic.com/v4/j/spmp/2025/08/02/4b/1754114763eb32b56d1542ca6208015950d16469dd_square.jpg" alt="" onclick="openLightbox(this)" class="TWS Wireless Earbuds Transparent  Earbuds">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Airbuds</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">TWS Wireless Earbuds Transparent  Earbuds </h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">TWS Wireless Earbuds Transparent Fashion ENC Noise Canceling Earbuds Wireless Headset Clear Voice Calls, USB Charging For All Mobile Phones With Cleaning Pen</p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$5.40</span>
-            <a href="https://onelink.shein.com/48/5yz8ww5ceedh" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-        </div>
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="audio">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Pick</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://img.ltwebstatic.com/v4/j/spmp/2026/07/04/de/1783160398a89ba9a2adbe27e162edf7b18251abed_square.jpg" alt="" onclick="openLightbox(this)" class="2 Pack USB-C Wired In-Ear Headphones">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Etring Earphones</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">2 Pack USB-C Wired In-Ear Headphones</h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">2 Pack USB-C Wired In-Ear Headphones, Inline Remote Control For Music Call Volume, Compatible With AppleIPhone 15/16/17 Series, Galaxy, Pixel</p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$5.94</span>
-            <a href="https://onelink.shein.com/47/5ywuxeirvewk" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-        </div>
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="audio">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Pick</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://img.ltwebstatic.com/v4/j/spmp/2026/04/10/dd/1775810859398637bf0962770fa9e90434b9078ec7.jpg" alt="" onclick="openLightbox(this)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Etring Earphones</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">USB C Wired Earbuds Ear Buds For IPhone 17 16 Pro Max 16e 16 Plus 16Pro 15 Pro Max 15 Plus 15Pro 15</h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">USB C Wired Earbuds Ear Buds For IPhone 17 16 Pro Max 16e 16 Plus 16Pro 15 Pro Max 15 Plus 15Pro 15 USBC In-Ear Headphones Wired Type C IPhone16 Earbud Earphones Headsets With Microphone For Samsung</p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$7.30</span>
-            <a href="https://onelink.shein.com/47/5ywuixmm486lq" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-        </div>
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="audio">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Pick</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://img.ltwebstatic.com/images3_pi/2024/07/30/20/1722324445101c63371f8aa3a39d8c2f045a9db149.jpg" alt="JMMO Wireless Earbuds With Premium Sound, 5.3 Auto Pairing Ear Buds" onclick="openLightbox(this)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Earbuds</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">JMMO Wireless Earbuds With Premium Sound, 5.3 Auto Pairing Ear Buds</h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">JMMO Wireless Earbuds With Premium Sound, 5.3 Auto Pairing Ear Buds With Long Playtime Light Weight Waterproof Wireless Headphones For IOS And Android, Suitable For Sports Workout</p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$5.79</span>
-            <a href="https://onelink.shein.com/47/5ywu7v2dejoq" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-        </div>
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="audio">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Pick</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://img.ltwebstatic.com/v4/j/spmp/2026/07/15/54/1784109502ae0b0abfd0aef28faf535fbee972d92a.jpg" alt="2026 New Air 4 White Wireless In Ear Headphones Earbuds" onclick="openLightbox(this)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Earbuds</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">Earphones Bluetooth Airpro 2 Earpods Ear Pads Noise Cancellation Headphones</h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">Earphones Bluetooth Airpro 2 Earpods Ear Pads Noise Cancellation Headphones Airpro Earbuds 2026 New Air 4 White In Ear Earbuds Long Battery HiFi Sound</p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$10.90</span>
-            <a href="https://onelink.shein.com/47/5ywttg58qpml" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-        </div>
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="audio">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Pick</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://img.ltwebstatic.com/v4/j/spmp/2026/03/05/9e/1772722313681fdf73d2ea2f4e56209a79a4614490_square.jpg" alt="2026 New Air 4 White Wireless In Ear Headphones Earbuds" onclick="openLightbox(this)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Earbuds</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">2026 New Air 4 White Wireless In Ear Headphones Earbuds</h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">2026 New Air 4 White Wireless In Ear Headphones Earbuds</p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$11.39</span>
-            <a href="https://onelink.shein.com/47/5ywtabjgg9hi" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-        </div>
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="Hair">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Pick</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://m.media-amazon.com/images/I/71wC8BkUfLL._SL1500_.jpg" alt="UNICE Human Hair Wig Wavy" onclick="openLightbox(this)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Beauty & Grooming</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">UNICE Human Hair Wig Wavy</h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">UNICE Human Hair Wig Wavy Bob Glueless 7x5 HD Lace Front, Pre Plucked Pre Cut, Chocolate Brown with Honey Blonde Highlights, Drawstring No Slip, Ready to Wear Beginner Friendly 10 inch</p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$99.99</span>
-            <a href="https://amzn.to/4wVbBDK" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-        </div>
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="Hair">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Pick</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://m.media-amazon.com/images/I/71FLiMPTj7L._SL1000_.jpg" alt="Water Wave Human Hair Bundles" onclick="openLightbox(this)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Beauty & Grooming</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">Water Wave Human Hair Bundles</h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">Water Wave Human Hair Bundles 22 24 26 28 Inch Wet and Wavy Bundles Human Hair 12A Burmese Deep Curly Wave 4 Bundles Human Hair Extension Natural Color</p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$89.99</span>
-            <a href="https://amzn.to/4gtFEN3" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-        </div>
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="Hair">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Pick</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://m.media-amazon.com/images/I/81zRIZTPTaL._SL1500_.jpg" alt="ASHINE Human Hair Bundles" onclick="openLightbox(this)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Beauty & Grooming</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">ASHINE Human Hair Bundles</h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">ASHINE Human Hair Bundles Deep Wave Unprocessed Cambodian Raw Hair 14 16 18 Inch, Flip Over Quick Weave Wet and Wave Bundles for Women Natural Black</p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$125.98</span>
-            <a href="https://amzn.to/4fY0WlR" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-        </div>
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="Hair">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Pick</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://m.media-amazon.com/images/I/81dsMg87XwL._SL1500_.jpg" alt="BEANATASHA 12A Human Hair Bundles " onclick="openLightbox(this)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Beauty & Grooming</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">BEANATASHA 12A Human Hair Bundles</h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">BEANATASHA 12A Human Hair Bundles 16 18 20 Inch Body Wave Bundles Human Hair 100% Unprocessed Brazilian Virgin Weave 3 Bundles Deals</p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$61.99</span>
-            <a href="https://amzn.to/45ZC5YT" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-        </div>
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="Hair">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Pick</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://m.media-amazon.com/images/I/713x5ecJ2JL._SL1200_.jpg" alt="WOWQUEEN 10A Brazilian Straight Human Hair Bundles " onclick="openLightbox(this)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Beauty & Grooming</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">WOWQUEEN 10A Brazilian Straight Human Hair Bundles</h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">WOWQUEEN 10A Brazilian Straight Human Hair Bundles 18 20 22 Inch 100% Unprocessed Virgin Straight Weave 3 Bundles Deals Human Hair</p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$73.29</span>
-            <a href="https://amzn.to/4zkDdDX" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-        </div>
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="Backpack">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Pick</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://m.media-amazon.com/images/I/81Vv+GlYfvL._AC_SL1500_.jpg" alt="Boys Backpack with Lunch Box for Kids" onclick="openLightbox(this)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Luggage</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">Boys Backpack with Lunch Box for Kids</h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">Boys Backpack with Lunch Box for Kids for Age 6-8 8-10 10-12School Bag for Middle High School Primary Preppy Bookbag Black</p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$29.98</span>
-            <a href="https://amzn.to/4xA0hge" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-        </div>
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="Backpack">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Pick</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://m.media-amazon.com/images/I/8101EAL5uNL._AC_SL1500_.jpg" alt="Boys Backpack with Lunch Box Kids" onclick="openLightbox(this)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Luggage</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">Boys Backpack with Lunch Box Kids</h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">Boys Backpack with Lunch Box Kids Backpack for School Bag for Kids Bookbag Set School Backpacks for Boys (Black)</p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$39.99</span>
-            <a href="https://amzn.to/4x2swV7" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-        </div>
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="Backpack">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Pick</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://m.media-amazon.com/images/I/71NrFRsTkfL._AC_SL1500_.jpg" alt="Girls Backpack Kids Backpack" onclick="openLightbox(this)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Luggage</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">Girls Backpack Kids Backpack</h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">Girls Backpack Kids Backpack for School Girls Bookbag
-Kawaii Bow backpack 3pcs Kids Bookbag for Teen Elementary Middle School with Lunch Bag Pencil Case lightweight school bag</p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$33.99</span>
-            <a href="https://amzn.to/4g96fh4" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-        </div>
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="Backpack">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Pick</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://m.media-amazon.com/images/I/71qYfL4kUpL._AC_SL1500_.jpg" alt="3pcs Boys Backpack with Lunch Box" onclick="openLightbox(this)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Luggage</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">3pcs Boys Backpack with Lunch Box</h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">3pcs Boys Backpack with Lunch Box School Bags for Boys Lightweight Astronaut Kids Backpack Bookbags Sets for Elementary School Students, Green</p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$29.99</span>
-            <a href="https://amzn.to/4ckSLh4" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-        </div>
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="Backpack">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Pick</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://m.media-amazon.com/images/I/71h0QT7pbFS._AC_SL1500_.jpg" alt="Backpack for Girls, Kids" onclick="openLightbox(this)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Luggage</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">Backpack for Girls, Kids</h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">Backpack for Girls, Kids backpacks Preschool Kindergarten Bookbag Cute Lightweight With Chest Strap and Lunchbox (Unicorn)</p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$29.85</span>
-            <a href="https://amzn.to/4wDWdeg" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-        </div>
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="Backpack">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Pick</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://m.media-amazon.com/images/I/61-4I7afqHL._AC_SX679_.jpg" alt="Boys Backpacks for Primary Junior School Kids" onclick="openLightbox(this)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Luggage</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">Boys Backpacks for Primary Junior School Kids</h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">Boys Backpacks for Primary Junior School Kids Backpack with Lunch Box Galaxy Space Bookbags for Boys Girls</p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$29.80</span>
-            <a href="https://amzn.to/4xAXFP9" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-        </div>
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="Backpack">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Pick</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://m.media-amazon.com/images/I/712aBtrrAfL._AC_SL1500_.jpg" alt="ACESAK Kids School Backpack for Girls" onclick="openLightbox(this)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Luggage</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">ACESAK Kids School Backpack for Girls</h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">ACESAK Kids School Backpack for Girls, Mermaids Bookbag Backpack with 14OZ Water Bottle, Lunch Bag Set for GirlsTeens Middle Student, Girls Backpacks for School </p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$39.99</span>
-            <a href="https://amzn.to/4wqPXX2" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-        </div>
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="Backpack">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Pick</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://m.media-amazon.com/images/I/71ZRwab0jgL._AC_SL1500_.jpg" alt="Fimibuke Waterproof Backpacks for School Girls" onclick="openLightbox(this)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Luggage</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">Fimibuke Waterproof Backpacks for School Girls</h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">Fimibuke Waterproof Backpacks for School Girls with Lunch Box & Pencil Case</p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$39.99</span>
-            <a href="https://amzn.to/462PCPo" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-        </div>
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="Backpack">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Pick</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://m.media-amazon.com/images/I/71YUTe6RUdL._AC_SL1500_.jpg" alt="Kids Backpack for Boys Kindergarten" onclick="openLightbox(this)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Luggage</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">Kids Backpack for Boys Kindergarten </h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">Kids Backpack for Boys Kindergarten Elementary Primary School Bookbags Back to School Bags with Large Campartments Mochilas para Escolares Niños 17" Dark Black</p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$24.99</span>
-            <a href="https://amzn.to/4gxILU9" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-        </div>
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="Bags">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Pick</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://m.media-amazon.com/images/I/71VTPtWcuIL._AC_SL1500_.jpg" alt="Spider Backpack Boys 4-6 6-8 Kids" onclick="openLightbox(this)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Luggage</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">Spider Backpack Boys 4-6 6-8 Kids Bookbag </h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">Spider Backpack Boys 4-6 6-8 Kids Bookbag Kindergarten Elementary School 17 Inch Daypack Bags Toddler Mochila Para Niños, Spider-Black</p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$19.99</span>
-            <a href="https://amzn.to/4zeU23f" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-        </div>
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="audio">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Pick</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://m.media-amazon.com/images/I/51CnDMbXZzL._AC_SL1200_.jpg" alt="Soundcore by Anker Q20i Hybrid Active Noise Cancelling Headphones" onclick="openLightbox(this)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Electronic Components & Home Audio</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">Soundcore by Anker Q20i Hybrid Active Noise Cancelling Headphones</h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">Soundcore by Anker Q20i Hybrid Active Noise Cancelling Headphones, Black
-Over-Ear, Bluetooth, 40H ANC Playtime, Hi-Res Audio, Big Bass, Transparency Mode, Customize via App, Travel, Home, Office</p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$44.99</span>
-            <a href="https://amzn.to/4x5cmKA" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-        </div>
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="audio">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Pick</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://m.media-amazon.com/images/I/61FUX7QmifS._AC_SL1500_.jpg" alt="JBL Tune 510BT - Bluetooth headphones" onclick="openLightbox(this)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Electronic Components & Home Audio</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">Uliptz Bluetooth Headphones Over Ear, Wireless HiFi Stereo Foldable Headset</h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">JBL Tune 510BT - Bluetooth headphones with up to 40 hours battery, microphone for call, foldable and comfortable, Android and iOs compatible (Blue)</p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$29.95</span>
-            <a href="https://amzn.to/4zotA7s" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-        </div>
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="audio">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Pick</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://m.media-amazon.com/images/I/61-ZTbzw6oL._AC_SL1500_.jpg" alt="Uliptz Bluetooth Headphones Over Ear, Wireless HiFi Stereo Foldable Headset" onclick="openLightbox(this)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Electronic Components & Home Audio</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">Uliptz Bluetooth Headphones Over Ear, Wireless HiFi Stereo Foldable Headset</h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">Uliptz Bluetooth Headphones Over Ear, Wireless HiFi Stereo Foldable Headset
-65H Playtime, Bluetooth 6.0, 6 EQ Modes, Built-in Mic, Deep Bass Stereo, Lightweight Design for Home, Office, Travel & PC</p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$15.96</span>
-            <a href="https://amzn.to/4xHJDLP" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-        </div>
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="audio">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Pick</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://m.media-amazon.com/images/I/41PA8xgXx4L._AC_SL1200_.jpg" alt="Sony WH-CH520 Wireless" onclick="openLightbox(this)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Electronic Components & Home Audio</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">Sony WH-CH520 Wireless</h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">Sony WH-CH520 Wireless On-Ear Bluetooth Headphones with Microphone, White
-Comfortable Lightweight Design, Up to 50 Hrs Battery with Quick Charging, Multipoint Connection, Clear Calls, Swivel design</p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$38.00</span>
-            <a href="https://amzn.to/4wt1cya" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-        </div>
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="audio">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Pick</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://m.media-amazon.com/images/I/717HDu4YpuL._AC_SL1500_.jpg" alt="Wired Headphones with Mic, 3.5mm " onclick="openLightbox(this)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Electronic Components & Home Audio</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">Wired Headphones with Mic, 3.5mm </h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">Wired Headphones with Mic, 3.5mm Headphones Volume Control for School Black
-Wired Over Ear Foldable Corded Headphones for Teens Classroom Travel Airplane, 4.9ft Tangle-Free Cord for Tablet Laptop Phone</p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$9.98</span>
-            <a href="https://amzn.to/4wouNst" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-        </div>
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="audio">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Pick</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://img.ltwebstatic.com/v4/j/spmp/2025/08/15/34/175525289731acb13f53127c20c8775fb6d36fe56e_square.jpg" alt="Bluetooth Speaker" onclick="openLightbox(this)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Electronic Components & Home Audio</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">Portable Bluetooth Karaoke Speaker</h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">JYX Karaoke Machine For Adults & Kids, Portable Bluetooth Karaoke Speaker With 2 Microphones, Supports TV/AUX/USB Card/REC For Home Party Outdoor Camping, For Women Men</p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$59.55</span>
-            <a href="https://onelink.shein.com/47/5ytx49erqo7o" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-        </div>
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="audio">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Pick</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://img.ltwebstatic.com/v4/j/pi/2025/12/11/b3/17654176481be65f5a0cf515815302bcf36a6033e9.jpg" alt="Bluetooth Speaker" onclick="openLightbox(this)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Electronic Components & Home Audio</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">Teckwe Big Bluetooth Speaker Portable </h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">Teckwe Big Bluetooth Speaker Portable TWS Wireless Mini Bass Boombox LED Loudspeaker IPX6 Outdoor Music Player Support BT AUX FM TF,1200mAh</p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$7.40</span>
-            <a href="https://onelink.shein.com/47/5ytwt0xfmq0u" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-        </div>
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="audio">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Pick</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://img.ltwebstatic.com/v4/j/spmp/2025/12/05/be/1764926691dc339fc74ea9345b47bc14f81223a181_square.jpg" alt="Bluetooth Speaker" onclick="openLightbox(this)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Electronic Components & Home Audio</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">Sound Bar For Smart TV </h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">Sound Bar For Smart TV, 2.0 Channel, 17-Inch Compact Soundbar TV Speakers For Projector, Bluetooth AUX Connection, Remote Control, Easy Setup, 80W Surround Sound System For PC Home Theater Audio</p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$35.20</span>
-            <a href="https://onelink.shein.com/47/5ytwj1tt5ftt" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-        </div>
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="phones">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Pick</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://img.ltwebstatic.com/v4/j/spmp/2025/03/31/fc/1743389644384e0c2ee79f6ef5d97e12c53d2ddf2c.jpg" alt="Slogan Pattern Liquid Silicone Phone Case" onclick="openLightbox(this)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Phone Case</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">Slogan Pattern Liquid Silicone Phone Case</h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light"> Full Protection, Shockproof And Anti-Drop, TPU Soft Material, Compatible With IPhone 11/12/13/14/15/15 Pro/15 Plus/15 Pro Max/7 Plus/8 Plus/X/Xs Max/Xr/11 Pro/12 Pro/13 Pro/14 Pro/12 Mini/13 Mini/11 Pro Max/12 Pro Max/13 Pro Max/14 Pro Max/14 Plus/6/6s/6 Plus/7/8/SE, And Galaxy</p> 
-         </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$1.98</span>
-            <a href="https://onelink.shein.com/47/5ytvqzlzgn5w" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-        </div>
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="phones">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Pick</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://img.ltwebstatic.com/v4/j/spmp/2025/04/08/86/1744114709d90d59b8aadacb1a175c72916de02a8c_square.jpg" alt="Shockproof Armored Sliding Cover Phone Case" onclick="openLightbox(this)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Phone Case</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">Shockproof Armored Sliding Cover Phone Case </h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">Shockproof Armored Sliding Cover Phone Case Compatible With IPhone 17 Pro Max 16E 16 15 14 13 12 11 Pro Max, Also Compatible With IPhone 16 Pro Max 16 Pro 16 Plus 17 Pro 17 Air 13 Pro Max, And Galaxy S26 Ultra S26 Plus S25 Ultra S24 Ultra, With Ring Holder Back Shell</p> 
-         </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$3.90</span>
-            <a href="https://onelink.shein.com/47/5ytvfp5m9c9g" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-        </div>
-       <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="phones">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Pick</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://img.ltwebstatic.com/v4/j/spmp/2026/07/24/30/178487553963ba5d13d588d8620a535346448f219f.jpg" alt="Protective Phone Cover For IPhone" onclick="openLightbox(this)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Phone Case</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">Protective Phone Cover For IPhone </h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">1pc Deep Green Background Watercolor Gold Line Light Green Flower Eucalyptus Leaf All Over Print Soft Protective Phone Cover For IPhone 17/16/16e/15 Pro Max/14 Plus/13 Mini/12 Pro/11/X/XS/XR/XS Max/7/8 Plus& Galaxy S26/S25/S24 Ultra/S23 FE/S22</p> 
-         </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$1.68</span>
-            <a href="https://onelink.shein.com/47/5ytv1vxtw7pq" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-        </div>
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="phones">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Pick</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://img.ltwebstatic.com/v4/p/spmp/2026/06/23/db/1782200141e13eb067e8a19054a2a7648f7568df76.png" alt="Shockproof Full Coverage Phone Case " onclick="openLightbox(this)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Phone Case</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">Shockproof Full Coverage Phone Case </h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">Personalized Shockproof Full Coverage Phone Case Compatible With Apple 17 16 15 14 13 12 11 Pro Max Air</p> 
-         </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$3.60</span>
-            <a href="https://onelink.shein.com/47/5yturf2xd18d" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-        </div>
-       <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="phones">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Pick</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://img.ltwebstatic.com/v4/j/spmp/2026/05/17/85/1779000851c5d209f10141619d184744643e16e57a.jpg" alt=", Phone 17 Pro Max Phone Case" onclick="openLightbox(this)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Phone Case</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">, Phone 17 Pro Max Phone Case</h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">Phone 17 Pro Max Phone Case, Compatible With Phone 16 Pro Max, 15 Pro Max, 14 Pro Max, Korean-Style High-End Fashionable And Fun Phone Case, Compatible With 11/12/13/14/15/75 Pro Max Plus, Elegant Design Suitable For Men And Women, Perfect Gift For Girlfriend!</p> 
-         </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$2.79</span>
-            <a href="https://onelink.shein.com/47/5ytu1vmiurd7" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-        </div>
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="phones">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Pick</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://m.media-amazon.com/images/I/61PsWioQprL._AC_SL1500_.jpg" alt="16PM Smartphone: Massive 6.99 FHD+ Screen " onclick="openLightbox(this)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Phone</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">Samsung Galaxy A37 5G (2026)</h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">Samsung Galaxy A37 5G (2026), Unlocked Android Smartphone, 128GB, AMOLED Display, Triple Camera, IP68, Slim Phone, 5000mAh Battery, US Version, US 1 Yr Warranty, Awesome White</p> 
-         </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$158.88</span>
-            <a href="https://amzn.to/4qho6Hm" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-        </div>
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="phones">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Pick</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://m.media-amazon.com/images/I/61n9YE0kF3L._AC_SL1500_.jpg" alt="Samsung Galaxy A17 5G Smart Phone 128GB" onclick="openLightbox(this)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Phone</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">Samsung Galaxy A37 5G (2026)</h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">Samsung Galaxy A37 5G (2026), Unlocked Android Smartphone, 128GB, AMOLED Display, Triple Camera, IP68, Slim Phone, 5000mAh Battery, US Version, US 1 Yr Warranty, Awesome White</p> 
-         </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$209.99</span>
-            <a href="https://amzn.to/4bOrx2c" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-        </div>
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="phones">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Pick</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://m.media-amazon.com/images/I/51j1DwAuldL._AC_SL1500_.jpg" alt="Samsung Galaxy A37 5G (2026)" onclick="openLightbox(this)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Phone</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">Samsung Galaxy A37 5G (2026)</h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">Samsung Galaxy A37 5G (2026), Unlocked Android Smartphone, 128GB, AMOLED Display, Triple Camera, IP68, Slim Phone, 5000mAh Battery, US Version, US 1 Yr Warranty, Awesome White</p> 
-         </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$374.99</span>
-            <a href="https://amzn.to/4bSaegO" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-        </div>
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="phones">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Pick</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://m.media-amazon.com/images/I/51mD59m3QKL._AC_SL1500_.jpg" alt="Samsung Galaxy A57 5G (2026)" onclick="openLightbox(this)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Phone</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">Samsung Galaxy A57 5G (2026)</h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">Samsung Galaxy A57 5G (2026), Unlocked Android Smartphone, 128GB, AMOLED Display, Triple Camera, IP68, 5000mAh Battery, US Version, US 1 Yr Warranty, Awesome Gray</p> 
-         </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$387.50</span>
-            <a href="https://amzn.to/4i7VJJp" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-        </div>
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="phones">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Pick</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://m.media-amazon.com/images/I/51xoyKNLBvL._AC_SL1080_.jpg" alt="SAMSUNG Galaxy A56 5G 2025" onclick="openLightbox(this)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Phone</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">SAMSUNG Galaxy A56 5G 2025</h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">SAMSUNG Galaxy A56 5G 2025 with AI | 256GB, 8GB, Dual SIM | 6.7" 120Hz AMOLED, Water Resistant, Android 15 | International Model Factory Unlocked for T-Mobile, Global | 25W Charger Bundle (Graphite)</p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$387.50</span>
-            <a href="https://amzn.to/4ziyvXe" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-        </div>
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="phones">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Pick</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://m.media-amazon.com/images/I/71jG+e7roXL._AC_SL1500_.jpg" alt="Apple MacBook Air Late 2020" onclick="openLightbox(this)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Computers, Tablets & Components</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">Apple MacBook Air Late 2020</h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">Apple MacBook Air Late 2020 with Apple M1 Chip (13.3 inch, 8GB RAM, 256GB SSD) Space Gray (Renewed)</p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$420.00</span>
-            <a href="https://amzn.to/4xExhUA" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-        </div>
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="phones">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Pick</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://m.media-amazon.com/images/I/71C4pxwekwL._AC_SL1500_.jpg" alt="Lenovo IdeaPad Slim 3i • 15.6" onclick="openLightbox(this)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Computers, Tablets & Components</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">Lenovo IdeaPad Slim 3i • 15.6"</h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">Lenovo IdeaPad Slim 3i • 15.6" FHD Laptop with Microsoft Office 365 • Intel 4 Cores • 128GB SSD • Lightweight • Win 11</p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$329.99</span>
-            <a href="https://amzn.to/3UdGQeM" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-        </div>
-       <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="phones">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Pick</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://m.media-amazon.com/images/I/71qGwhs4B-L._AC_SL1500_.jpg" alt="2026 Laptop Computer, 15.6 Inch Windows 11 Pro Laptops" onclick="openLightbox(this)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Computers, Tablets & Components</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">2026 Laptop Computer, 15.6 Inch Windows 11 Pro Laptops</h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">2026 Laptop Computer, 15.6 Inch Windows 11 Pro Laptops with Office 365, 8GB RAM 256GB SSD, Traditional Portable Lap top with Core M3-6Y30 Processor and Built-in Cooling System for Business & Students</p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$279.99</span>
-            <a href="https://amzn.to/4xGDiAd" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-        </div>
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="phones">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Pick</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://m.media-amazon.com/images/I/51ICTqH9N0L._AC_.jpg" alt="Lenovo IdeaPad Slim 3i 15.6" onclick="openLightbox(this)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Computers, Tablets & Components</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">Lenovo IdeaPad Slim 3i 15.6,</h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">Lenovo IdeaPad Slim 3i 15.6" FHD Business & Student Laptop with 1-Year Office 365 included, Intel Quad-Core Processor, 640GB Storage (128GB SSD+512GB SD Card), 4GB RAM, Win 11 PLUSERA 8-in-1 Hub, Grey</p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$329.99</span>
-            <a href="https://amzn.to/4xxzxNw" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-        </div>
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="audio">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Pick</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://img.ltwebstatic.com/v4/j/spmp/2026/05/21/ec/1779358036ac04e898cb2e68b4a3983a84b126e2f9_square.jpg" alt="Bluetooth Speaker" onclick="openLightbox(this)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Electronic Components & Home Audio</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">Portable TG-116C Wireless Speaker Box </h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">Portable TG-116C Wireless Speaker Box Subwoofer Music Center BoomBox 3D Stereo Speakers Support FM Radio AUX</p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$8.67</span>
-            <a href="https://onelink.shein.com/47/5ytw7xaj8w9z" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-        </div>
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="audio">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Pick</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://m.media-amazon.com/images/I/815WkSBfvUL._AC_SL1500_.jpg" alt="Bluetooth Speaker" onclick="openLightbox(this)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Electronic Components & Home Audio</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">W-KING Portable Bluetooth Speaker,</h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">W-KING Portable Bluetooth Speaker, 330W Peak Loud Boombox Party Outdoor
-200W RMS Massive Bass, 7.5" Subwoofer, 2 Woofers, 5 Drivers, 2.1Ch, IP67, BT5.4, Stereo Pair, APP, Large Wireless Speakers</p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$219.99</span>
-            <a href="https://amzn.to/4gjpjtg" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-        </div>
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="audio">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Pick</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://m.media-amazon.com/images/I/91EWQlkVx3L._AC_SL1500_.jpg" alt="Bluetooth Speaker" onclick="openLightbox(this)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Electronic Components & Home Audio</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">Portable Bluetooth Speakers Loud 40W Peak Stereo Sound,</h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">Portable Bluetooth Speaker, IPX7 Waterproof Wireless Speaker with 20W Loud Stereo Sound, 15H Playtime & Beat-Synced RGB Light, Small Outdoor Speaker for Shower, Pool, Beach, Hiking and Gifts</p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$39.99</span>
-            <a href="https://amzn.to/4c8OygD" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-        </div>
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="audio">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Pick</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://m.media-amazon.com/images/I/817Rz+jPYtL._AC_SL1500_.jpg" alt="SPEAKER" onclick="openLightbox(this)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Electronic Components & Home Audio</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">Portable Bluetooth Speaker,</h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">Portable Bluetooth Speaker, IPX7 Waterproof Wireless Speaker with 20W Loud Stereo Sound, 15H Playtime & Beat-Synced RGB Light, Small Outdoor Speaker for Shower, Pool, Beach, Hiking and Gifts</p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$19.99</span>
-            <a href="https://amzn.to/4hEkBsl" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-        </div>
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="kitchen">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Pick</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://m.media-amazon.com/images/I/81qh81qY0QL._AC_SL1500_.jpg" alt="Kitchen & Dining" onclick="openLightbox(this)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">kitchen Accessories</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">Kitstorack Under Sink Organizer,</h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">Kitstorack Under Sink Organizer, 2 Tier Under the Sink Storage, Slide out Pull out Cabinet Organizer Shelf, Metal Sliding Drawer for Kitchen Bathroom Pantry Closet Organization Rack, Black, 2 Pack</p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$45.99</span>
-            <a href="https://amzn.to/4cGLybg" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-        </div>
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="kitchen">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Pick</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://m.media-amazon.com/images/I/71vF947HUVL._AC_SL1500_.jpg" alt="Kitchen & Dining" onclick="openLightbox(this)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">kitchen Accessories</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">Astercook 19 Pcs Pots and Pans Set Non Stick</h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">Astercook 19 Pcs Pots and Pans Set Non Stick, Black Titanium Induction Kitchen Cookware Sets, Non toxic Healthy Kitchen Cooking Set with Frying Pans Set, PTFE PFOA PFOS Free, Fathers Day Gift for Men</p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$79.98</span>
-            <a href="https://amzn.to/4wxbYDF" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-        </div>
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="kitchen">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Pick</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://m.media-amazon.com/images/I/71jfzcXideL._AC_SL1500_.jpg" alt="Kitchen & Dining" onclick="openLightbox(this)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">kitchen Accessories</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">Ninja Air Fryer Pro, 5 Qt, 4-in-1, Grey, AF141</h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">Ninja Air Fryer Pro, 5 Qt, 4-in-1, Grey, AF141
-Air fry, roast, reheat, dehydrate, 1750W, 400F max, Fits 4 lbs fries, Nonstick basket, Dishwasher-safe</p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$129.99</span>
-            <a href="https://amzn.to/460EJh2" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-        </div>
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="kitchen">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Pick</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://m.media-amazon.com/images/I/61TheuxRpFL._AC_SL1500_.jpg" alt="Kitchen & Dining" onclick="openLightbox(this)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">kitchen Accessories</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">Astercook Knife Set for Kitchen</h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">Astercook Knife Set for Kitchen with Block and Sharpener 15pcs German
-Stainless Steel Kitchen Utensils Set Dishwasher Safe</p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$39.98</span>
-            <a href="https://amzn.to/3UynAZu" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-        </div>
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="kitchen">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Pick</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://m.media-amazon.com/images/I/71gfV71BDxL._AC_SL1500_.jpg" alt="Kitchen & Dining" onclick="openLightbox(this)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">kitchen Accessories</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">3-Piece Set Deep-Carbonized Bamboo Cutting Board for Kitchen</h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">3-Piece Set Deep-Carbonized Bamboo Cutting Board for Kitchen, Carbonized
-Crack-Resistant Wood Chopping Boards with Deep Juice Grooves, Pre-Oiled Butcher Block for Meat, Vegetables & Cheese</p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$12.98</span>
-            <a href="https://amzn.to/4x1xuS3" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-        </div>
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="kitchen">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Pick</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://m.media-amazon.com/images/I/61v0kBhe+LL._SL1500_.jpg" alt="Kitchen & Dining" onclick="openLightbox(this)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">kitchen Accessories</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">EUHOMY Countertop Ice Maker Machine with Handle, 26lbs in 24Hrs</h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">EUHOMY Countertop Ice Maker Machine with Handle, 26lbs in 24Hrs, 9 Ice Cubes Ready in 6 Mins, Auto-Cleaning Portable Ice Maker with Basket and Scoop, for Home/Kitchen/Camping/RV. (Black)</p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$69.78</span>
-            <a href="https://amzn.to/4cGKTXk" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-        </div>
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="kitchen">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Pick</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://m.media-amazon.com/images/I/71TKpVrR8aL._AC_SL1500_.jpg" alt="Kitchen & Dining" onclick="openLightbox(this)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">kitchen Accessories</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">Paper Towel Holder Under Cabinet, Self-Adhesive or Drilling, Matte Black</h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">Paper Towel Holder Under Cabinet, Self-Adhesive or Drilling, Matte Black
-Kitchen Roll Dispenser | Under-Cabinet or Wall-Mounted| Upgraded Aluminum | Lighter Yet Stronger Than Stainless Steel</p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$7.99</span>
-            <a href="https://amzn.to/45qQPA0" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-        </div>
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="kitchen">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Pick</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://m.media-amazon.com/images/I/71J6P8L6ORL._AC_SL1500_.jpg" alt="Kitchen & Dining" onclick="openLightbox(this)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">kitchen Accessories</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">Kitchen Utensil Set-Silicone Cooking Utensils-33 Kitchen Gadgets & Spoons</h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">Kitchen Utensil Set-Silicone Cooking Utensils-33 Kitchen Gadgets & Spoons for Nonstick Cookware-Silicone and Stainless Steel Spatula Set-Best Kitchen Tools, Useful Pots and Pans Accessories</p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$39.99</span>
-            <a href="https://amzn.to/4i95JCh" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-        </div>
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="kitchen">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Pick</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://m.media-amazon.com/images/I/616HEd6xzrL._AC_SL1500_.jpg" alt="Kitchen & Dining" onclick="openLightbox(this)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">kitchen Accessories</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">Hot Air Popcorn Machine - 14-Cup Electric Popcorn Popper, Oil-Free</h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">Hot Air Popcorn Machine - 14-Cup Electric Popcorn Popper, Oil-Free, 1200W - Includes Measuring Cup - Home Popcorn Maker for Movie Nights - Cream</p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$29.99</span>
-            <a href="https://amzn.to/4bQFSv4" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-      </div> 
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="kitchen">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Pick</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://m.media-amazon.com/images/I/81shIEM-H2L._AC_SL1500_.jpg" alt="Kitchen & Dining" onclick="openLightbox(this)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">kitchen Accessories</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">Sponge Holder for Kitchen Sink, Sink Organizer with Brush Holder</h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">Sponge Holder for Kitchen Sink, Sink Organizer with Brush Holder
-Kitchen Countertop Organizers and Storage Essentials, Rustproof 304 Stainless Steel (Black, 9.25″)</p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$13.99</span>
-            <a href="https://amzn.to/4htnA6J" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-      </div> 
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="kitchen">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Pick</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://m.media-amazon.com/images/I/81-4zs-+aAL._AC_SL1500_.jpg" alt="Kitchen & Dining" onclick="openLightbox(this)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">kitchen Accessories</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">24 Pack Kitchen Dishcloths - Does Not Shed Fluff - Reusable Dish Towels</h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">24 Pack Kitchen Dishcloths - Does Not Shed Fluff - Reusable Dish Towels, Dish cloths, Super Absorbent Coral Fleece Cleaning Cloths, Nonstick Oil Washable Fast Drying, 7 x 9 Inch (Multicolor)</p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$5.67</span>
-            <a href="https://amzn.to/4zxh71g" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-      </div> 
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="kitchen">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Pick</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://m.media-amazon.com/images/I/71zunmHst+L._AC_SL1500_.jpg" alt="Kitchen & Dining" onclick="openLightbox(this)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">kitchen Accessories</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">Ukeetap 8-Blade Cook Tool & Gadget Sets, Chopper Slicer Grater Set, White</h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">Ukeetap 8-Blade Cook Tool & Gadget Sets, Chopper Slicer Grater Set, White
-Vegetable Chopper Mandoline Slicer Food Grater with Container for Onion, Veggie Salad</p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$19.99</span>
-            <a href="https://amzn.to/4x0KhnO" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-      </div> 
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="kitchen">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Pick</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://m.media-amazon.com/images/I/71LN8nlWwxL._AC_SL1500_.jpg" alt="Kitchen & Dining" onclick="openLightbox(this)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">kitchen Accessories</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">Godspeeds Juicer Machines, 6" Large Feed Chute Cold Press Juicer</h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">Godspeeds Juicer Machines, 6" Large Feed Chute Cold Press Juicer
-For Whole Fruits & Vegetables, Easy to Clean Design, High Juice Yield Slow Masticating Juicer for Home Daily Wellness</p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$99.99</span>
-            <a href="https://amzn.to/4qj42nW" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-      </div> 
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="kids">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Trend pick</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://img.ltwebstatic.com/v4/j/spmp/2026/07/13/16/1783935796dca8e8e2a149770b5f20ccfc412216c7.jpg" alt="Boys Outfit" onclick="openLightbox(this)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Kids Collection</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">2pcs Boys' Letter Print Short-Sleeve Set, Casual Outdoor Sports Short-Sleeve And Shorts</h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">2pcs Boys' Letter Print Short-Sleeve Set, Casual Outdoor Sports Short-Sleeve And Shorts Two-Piece Set, Suitable For Teenagers' Outdoor Activities.</p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$6.88</span>
-            <a href="https://onelink.shein.com/47/5ytftt4ritc2" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-      </div> 
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="kids">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Trend pick</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://img.ltwebstatic.com/v4/j/spmp/2026/07/09/65/1783566503e49bf225bf27635d913b338b360b8e55.jpg" alt="Boys Outfit" onclick="openLightbox(this)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Kids Collection</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">Tween Boy Cotten Clothes,Y2K-Inspired Letter Print T-Shirt</h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">Summer Fashion New Dark Gray Flame Rhinestone Print Boys Outfit, Gothic Font Design, Casual Comfortable Cool Stylish Versatile.</p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$6.88</span>
-            <a href="https://onelink.shein.com/47/5ytfiknfev45" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-      </div> 
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="kids">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Trend pick</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://img.ltwebstatic.com/v4/j/pi/2026/06/17/3f/1781660337af5c04a6ea04d3b68dc7c492fab9cc23.jpg" alt="Boys Outfit" onclick="openLightbox(this)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Kids Collection</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">Summer Fashion New Dark Gray Flame Rhinestone Print Boys Outfit </h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">Summer Fashion New Dark Gray Flame Rhinestone Print Boys Outfit, Gothic Font Design, Casual Comfortable Cool Stylish Versatile.</p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$7.72</span>
-            <a href="https://onelink.shein.com/47/5ytdc949huzv" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-      </div> 
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="kids">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Trend</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://img.ltwebstatic.com/v4/j/pi/2025/06/19/aa/1750316727bf91c02c20992561eb6f371dea0fd056.jpg" alt="Kids Outfit" onclick="openLightbox(this)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Kids Collection</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">Simple Sweet Girl Graphic Short Sleeve Crew Neck T-Shirt Paired With Cargo Skirt </h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">Simple Sweet Girl Graphic Short Sleeve Crew Neck T-Shirt Paired With Cargo Skirt, Casual Summer Outfit.</p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$12.09</span>
-            <a href="https://onelink.shein.com/47/5ytd1ch428m5" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-      </div> 
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="kids">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Trend</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://img.ltwebstatic.com/v4/j/pi/2026/01/06/3d/176768125412ce920e2439bf167525e0c7f8531020.jpg" alt="Girl Outfit" onclick="openLightbox(this)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Kids Collection</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">SHEIN Girlism Tween Girl Spring Summer Distressed </h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">SHEIN Girlism Tween Girl Spring Summer Distressed Y2k Boho Cherry Embroidery Ripped Blue Denim Shorts Bermuda Spring/Summer Dailywears Streetwears Beach, Birthdays Casual Jeans, Vacations, Valentine's Day, Graphic Jeans Short, 2000s Bermuda, Summer.</p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$15.09</span>
-            <a href="https://onelink.shein.com/47/5ytcsgu3ur9w" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-      </div> 
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="kids">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Trend</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://img.ltwebstatic.com/v4/j/pi/2026/05/28/72/1779958134d264b1357c7e3d746433d62655eca92a.jpg" alt="Girls Outfit" onclick="openLightbox(this)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Kids Collection</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">Young Girl Spring/Summer Cute Casual Minimalist Heart Print Loose Short Sleeve T-Shirt + Long Pants </h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">Young Girl Spring/Summer Cute Casual Minimalist Heart Print Loose Short Sleeve T-Shirt + Long Pants, Casual Home Fashion Street Crew Neck Oversize Loose Dropped Shoulder New York Print Short Sleeve Sweatshirt And Pleated Straight Leg Wide Leg Long Pants Set Knit Sweatpants Set Green.</p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$8.09</span>
-            <a href="https://onelink.shein.com/47/5ysp2w2rmt4w" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-      </div> 
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="kids">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Trend</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://img.ltwebstatic.com/v4/j/pi/2026/07/12/c9/17838398074f861232a78b0b2bcd4eb8eda21ca372.jpg" alt="Girls Outfit" onclick="openLightbox(this)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Kids Collection</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">Sparklyn Tween Girls 2pcs/Set Round Neck Casual Vacation Fashion </h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">Sparklyn Tween Girls 2pcs/Set Round Neck Casual Vacation Fashion Street Chic Daily Commute Floral Print Short Sleeve T-Shirt And Wide Leg Cargo Pants Set.</p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$13.09</span>
-            <a href="https://onelink.shein.com/47/5ysoloj29ky6" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-      </div> 
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="men trending">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Trend</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://img.ltwebstatic.com/v4/j/spmp/2025/06/05/cc/174909236928df69344f493d562db1a6978c4d9bb5.jpg" alt="Men Outfit" onclick="openLightbox(this)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Men Collection</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">Men's Line Graphic Print Long Sleeve Formal Shirt</h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">Men's Line Graphic Print Long Sleeve Formal Shirt,Fall</p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$14.89</span>
-            <a href="https://onelink.shein.com/47/5ysnkwlbpgs0" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-      </div> 
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="men trending">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Trend</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://img.ltwebstatic.com/v4/j/spmp/2026/06/09/a3/1780973244f77d57b45681eba95862f2c89ead0e0c.jpg" alt="Men Outfit" onclick="openLightbox(this)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Men Collection</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">Men's Personalized Printed Short Sleeve T-Shirt</h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">Men's Personalized Printed Short Sleeve T-Shirt, Lightweight, Breathable, Comfortable For Summer Wear, Leading Fashion</p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$7.51</span>
-            <a href="https://onelink.shein.com/47/5ysmy5rhxagc" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-      </div> 
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="men trending">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Trend</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://img.ltwebstatic.com/images3_pi/2022/08/17/1660702893f4b037faecf5b0d0eb549f3503866cf0.jpg" alt="Men Outfit" onclick="openLightbox(this)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Men Collection</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">Men Plants Print Button Up Shirt</h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">Manfinity Homme Men Plants Print Button Up Shirt Without Tee.</p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$11.72</span>
-            <a href="https://onelink.shein.com/47/5ysmouc8td7n" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-      </div> 
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="men trending">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Trend</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://img.ltwebstatic.com/v4/j/spmp/2026/03/06/b2/1772778759cccc95987561e20bb1ae2ce5800a4ef9.jpg" alt="Men Outfit" onclick="openLightbox(this)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Men Collection</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">1 Pc Men's Clothing Milano Italia Printed White Tshirt</h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">1 Pc Men's Clothing Milano Italia Printed White Tshirt, Graphic Tee, Summer Tops, Shirt, Unisex Casual Crew Neck Tshirt, Plus Size Men's</p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$4.78</span>
-            <a href="https://onelink.shein.com/47/5ysmfeyxfxjg" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-      </div> 
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="men trending">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Trend</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://img.ltwebstatic.com/images3_spmp/2025/03/11/15/17416731644ae57628b439ff29d2590362e7e66897.jpg" alt="Men Outfit" onclick="openLightbox(this)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Men Collection</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">Punk Bear 3D Digital Print Cartoon Bear Pattern Men's T-Shirt,</h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">Punk Bear 3D Digital Print Cartoon Bear Pattern Men's T-Shirt, Comfortable Short Sleeve Pullover Top, Men's</p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$6.74</span>
-            <a href="https://onelink.shein.com/47/5ysm8u77vxu3" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-      </div> 
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="men trending">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Trend</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://img.ltwebstatic.com/images3_spmp/2024/10/23/29/1729666057ebefc2921c5f1c76118ca4fef7fe98f4.png" alt="Men Outfit" onclick="openLightbox(this)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Men Collection</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">220 Grams Round Neck Short Sleeve Men's T-Shirt</h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">220 Grams Round Neck Short Sleeve Men's T-Shirt, Simple Design, Soft And Comfortable, Daily Wear, A Good Choice For Family And Friends.</p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$8.36</span>
-            <a href="https://onelink.shein.com/47/5ysm13zv0wmh" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-      </div> 
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="men trending">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Trend</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://img.ltwebstatic.com/v4/j/spmp/2026/01/07/5d/1767768702aa7342b57f98ff5f6c9e90314fb4e111.jpg" alt="Men Outfit" onclick="openLightbox(this)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Men Collection</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">Men's Minimalist Printed Short Sleeve T-Shirt</h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">Men's Minimalist Printed Short Sleeve T-Shirt | Leading The Fashion, Streetwear.</p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$8.09</span>
-            <a href="https://onelink.shein.com/47/5yslneq4v6tu" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-      </div> 
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="men trending">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Trend</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://img.ltwebstatic.com/images3_pi/2025/03/31/e9/17433923606b788d7e8fa90fb5cbc8e5c13147b50e.jpg" alt="Men Outfit" onclick="openLightbox(this)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Men Collection</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">Men sleeve T-Shirt And Shorts Set, Summer</h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">Manfinity LEGND Men's Letter & Pentagram Print Loose Short Sleeve T-Shirt And Pants Set Camo 2 Piece Set Men.</p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$19.09</span>
-            <a href="https://onelink.shein.com/47/5yslbmihne3v" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-      </div>
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="men trending">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Trend</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://img.ltwebstatic.com/v4/j/pi/2025/10/13/c9/17603275245a7666b6a310d79a518c9a753b7ef899.jpg" alt="Men Outfit" onclick="openLightbox(this)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Men Collection</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white"> Pentagram Print Loose Short Sleeve T-Shirt And Pants</h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">Manfinity LEGND Men's Letter & Pentagram Print Loose Short Sleeve T-Shirt And Pants Set Camo 2 Piece Set Men.</p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$13.50</span>
-            <a href="https://onelink.shein.com/47/5yskrkd6g0gf" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Product Card 1 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="women trending">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Trend</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://img.ltwebstatic.com/v4/j/pi/2026/02/24/8b/17719249799d625e773d507fbb963898b0b91bdbaa.jpg" alt="Women Outfit" onclick="openLightbox(this)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Women Collection</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">Slaydiva Women's Slim Fit White And Burgundy Jumpsuit</h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">Slaydiva Women's Slim Fit White And Burgundy Jumpsuit,Short Sleeve Half-Open Placket Label Webbing Romper,Summer Cow Boy Gym Club Street Style Outfit.</p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$10.47</span>
-            <a href="https://onelink.shein.com/47/5ys6r44pqzpb" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Product Card 2 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="women trending">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Trending Pick</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://img.ltwebstatic.com/v4/j/spmp/2026/04/07/74/1775530193c84d85f8780b722248a4b69844228d73.jpg" alt="women Outfit" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Women Collection</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">Elegant Plus-Size Women's Set</h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">Elegant Plus-Size Women's Set With 'Sturdy Thighs And Beautiful Eyes' Print, T-Shirt And Shorts Two-Piece – Soft, Comfortable, And Stylish</p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$5.13</span>
-            <a href="https://onelink.shein.com/47/5ys67pnruv8o" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Product Card 3 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="women trending">
-        <div class="absolute top-4 left-4 z-20 bg-amber-400 text-black text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest shadow-lg">Top Trend</div>
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://img.ltwebstatic.com/v4/j/pi/2026/08/04/64/178583091162a687c9d5fcfff1c4424a5331ab4904.jpg" alt="Women Outfit" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">women Collection</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">Rovax Women's Street Fashion Distressed</h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">Rovax Women's Street Fashion Distressed Short Sleeve Crew Neck Top And Pocket Shorts Denim Effect 2 Pieces Set.</p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$13.67</span>
-            <a href="https://onelink.shein.com/47/5ys0pd2x9p4b" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Product Card 4 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="women trending">
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://img.ltwebstatic.com/v4/j/pi/2026/06/24/dd/178227154681102c405d12abb375edbcb84467c56a.jpg" alt="Women Outfit" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">women Collection</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">Slaydiva 2026 Spring/Summer 90s Street Style</h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">Slaydiva 2026 Spring/Summer 90s Street Style Slim Fit Mesh Floral Print Ruffled Top + Faux Knit Fringe Skirt Women Two Pieces Set Club Night Out Party Burgundy.</p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$10.65</span>
-            <a href="https://onelink.shein.com/47/5ys5453gj8y6" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Product Card 5 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="women">
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://img.ltwebstatic.com/v4/j/pi/2026/05/19/89/177919911638f855650bd96c39dace52d62e9bab30.jpg" alt="Women Outfit" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Women Collection</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">Bellisia Plus Size Women Metal Decor Halter Tankini Top And Shorts Swimwear Set</h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">Bellisia Plus Size Women Metal Decor Halter Tankini Top And Shorts Swimwear Set, Suitable For Summer Vacation And Beach.</p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">$15.09</span>
-            <a href="https://onelink.shein.com/47/5ys7n2fqezbq" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Product Card 6 -->
-      <div class="product-card group relative bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden hover:border-amber-400/50 transition-all flex flex-col shadow-xl" data-category="women">
-        <div class="relative h-72 sm:h-80 overflow-hidden bg-zinc-900">
-          <img src="https://img.ltwebstatic.com/v4/j/pi/2025/11/12/2f/17629131192e1fecbd306c8d835fb9254abd37f106.jpg" alt="Women Collection" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-        </div>
-        <div class="p-5 sm:p-6 flex flex-col flex-grow justify-between">
-          <div>
-            <span class="text-[10px] sm:text-[11px] font-bold tracking-widest text-amber-400 uppercase">Women Collection</span>
-            <h3 class="text-lg sm:text-xl font-bold mt-1 text-white">Floral Print Shirt And Pants Set</h3>
-            <p class="text-xs text-zinc-400 mt-2 font-light">SHEIN Clasi 2pcs Women Elegant Commuter Floral Print Shirt And Pants Set.</p>
-          </div>
-          <div class="mt-6 pt-4 border-t border-zinc-900 flex items-center justify-between">
-            <span class="text-base sm:text-lg font-black text-white">225.09</span>
-            <a href="https://onelink.shein.com/47/5ysa5i0qa7tl" target="_blank" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl transition-all shadow-md">
-              Secure Deal
-            </a>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </main>
-
-  <!-- High-End Footer -->
-  <footer class="bg-zinc-950 border-t border-zinc-900 py-12 sm:py-16 px-4 sm:px-6 mt-20">
-    <div class="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
-      <div class="flex flex-col gap-4">
-        <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-amber-400 to-amber-600 p-[2px]">
-            <div class="w-full h-full bg-black rounded-full flex items-center justify-center">
-              <span class="text-amber-400 font-black text-xs tracking-tighter">ES</span>
+    <div class="container">
+        <div class="grid" id="productGrid">
+            
+            <!-- Product Card 1 -->
+            <div class="card" data-title="wireless bluetooth headphones">
+                <div class="card-img" onclick="openModal(this.querySelector('img').src)">
+                    <img src="https://img.ltwebstatic.com/v4/j/spmp/2025/08/02/4b/1754114763eb32b56d1542ca6208015950d16469dd_square.jpg" alt="Product Image">
+                </div>
+                <div class="card-content">
+                    <div class="card-title">Noise Canceling Earbuds Wireless Headset Clear Voice Calls</div>
+                    <div class="card-price">$5.40</div>
+                    <a href="https://onelink.shein.com/48/5yzjaok4jwq2" target="_blank" class="btn-buy">View Best Deal</a>
+                </div>
             </div>
-          </div>
-          <span class="text-lg font-black uppercase text-amber-400">Easy-Select</span>
+
+            <!-- Product Card 2 -->
+            <div class="card" data-title="smart fitness watch tracker">
+                <div class="card-img" onclick="openModal(this.querySelector('img').src)">
+                    <img src="https://m.media-amazon.com/images/I/51uS5zMD1XL._AC_SL1500_.jpg" alt="Soundcore P30i">
+                </div>
+                <div class="card-content">
+                    <div class="card-title">Soundcore P30i by Anker Noise Cancelling Earbuds</div>
+                    <div class="card-price">$84.99</div>
+                    <a href="https://amzn.to/3TP1mT3" target="_blank" class="btn-buy">View Best Deal</a>
+                </div>
+            </div>
+
+            <!-- Product Card 3 -->
+            <div class="card" data-title="smart fitness watch tracker">
+                <div class="card-img" onclick="openModal(this.querySelector('img').src)">
+                    <img src="https://m.media-amazon.com/images/I/51HbL1WS+KL._AC_SL1500_.jpg" alt="Product Image">
+                </div>
+                <div class="card-content">
+                    <div class="card-title">Soundcore P30i by Anker Noise Cancelling Earbuds</div>
+                    <div class="card-price">$29.99</div>
+                    <a href="https://amzn.to/4wrSMa7" target="_blank" class="btn-buy">View Best Deal</a>
+                </div>
+            </div>
+
         </div>
-        <p class="text-xs text-zinc-400 font-light leading-relaxed">
-          Your premier affiliate gateway to world-class trending merchandise from Amazon and Shein.
-        </p>
-      </div>
-      <div>
-        <h4 class="text-xs font-bold tracking-widest uppercase text-white mb-4">Curated Categories</h4>
-        <ul class="space-y-2 text-xs text-zinc-400">
-          <li><a href="#women" class="hover:text-amber-400 transition-colors">Women Fashion</a></li>
-          <li><a href="#men" class="hover:text-amber-400 transition-colors">Men Apparel</a></li>
-          <li><a href="#kids" class="hover:text-amber-400 transition-colors">Kids Lifestyle</a></li>
-          <li><a href="#kitchen" class="hover:text-amber-400 transition-colors">Kitchen & Dining</a></li>
-        </ul>
-      </div>
-      <div>
-        <h4 class="text-xs font-bold tracking-widest uppercase text-white mb-4">Smart Tech & Gear</h4>
-        <ul class="space-y-2 text-xs text-zinc-400">
-          <li><a href="#audio" class="hover:text-amber-400 transition-colors">Audio Equipment</a></li>
-          <li><a href="#phones" class="hover:text-amber-400 transition-colors">Phones & Accessories</a></li>
-          <li><a href="#trending" class="hover:text-amber-400 transition-colors">Top Trends Pick</a></li>
-        </ul>
-      </div>
-      <div>
-        <h4 class="text-xs font-bold tracking-widest uppercase text-white mb-4">Global Partners</h4>
-        <p class="text-xs text-zinc-400 font-light mb-3">Proudly partnered with global e-commerce leaders.</p>
-        <span class="inline-block bg-zinc-900 border border-zinc-800 text-amber-300 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">Amazon & Shein Affiliate</span>
-      </div>
     </div>
-    <div class="max-w-7xl mx-auto mt-12 pt-6 border-t border-zinc-900 flex flex-col sm:flex-row items-center justify-between text-xs text-zinc-500">
-      <p>&copy; 2026 Easy-Select. All rights reserved.</p>
-      <p class="mt-2 sm:mt-0">Crafted for Elite Online Shopping.</p>
+
+    <!-- Modal View Box -->
+    <div id="imageModal" onclick="closeModal()">
+        <span class="close-modal">&times;</span>
+        <img id="modalImg" src="" alt="Zoomed Product Image">
     </div>
-  </footer>
 
-  <!-- JavaScript Logic -->
-  <script>
-    function toggleMobileMenu() {
-      const menu = document.getElementById('mobileMenu');
-      menu.classList.toggle('hidden');
-    }
+    <script>
+        function filterProducts() {
+            let input = document.getElementById('searchInput').value.toLowerCase();
+            let cards = document.getElementsByClassName('card');
 
-    function filterCategory(category) {
-      document.querySelectorAll('.cat-btn').forEach(btn => {
-        btn.classList.remove('bg-amber-400', 'text-black', 'shadow-md');
-        btn.classList.add('bg-zinc-900', 'text-zinc-300', 'border', 'border-zinc-800');
-      });
-      event.target.classList.remove('bg-zinc-900', 'text-zinc-300', 'border', 'border-zinc-800');
-      event.target.classList.add('bg-amber-400', 'text-black', 'shadow-md');
-
-      const cards = document.querySelectorAll('.product-card');
-      cards.forEach(card => {
-        const categories = card.getAttribute('data-category');
-        if (category === 'all' || categories.split(' ').includes(category)) {
-          card.style.display = 'flex';
-        } else {
-          card.style.display = 'none';
+            for (let i = 0; i < cards.length; i++) {
+                let title = cards[i].getAttribute('data-title');
+                if (title.includes(input)) {
+                    cards[i].style.display = "";
+                } else {
+                    cards[i].style.display = "none";
+                }
+            }
         }
-      });
-    }
 
-    function searchProducts() {
-      const query = document.getElementById('searchInput').value.toLowerCase();
-      const cards = document.querySelectorAll('.product-card');
-      cards.forEach(card => {
-        const text = card.innerText.toLowerCase();
-        if (text.includes(query)) {
-          card.style.display = 'flex';
-        } else {
-          card.style.display = 'none';
+        function openModal(imgSrc) {
+            let modal = document.getElementById('imageModal');
+            let modalImg = document.getElementById('modalImg');
+            modal.style.display = "flex";
+            modalImg.src = imgSrc;
         }
-      });
-    }
-    // Lightbox Functions
-  function openLightbox(imgElement) {
-    let modal = document.getElementById('imageModal');
-    let modalImg = document.getElementById('lightboxImg');
-    modal.style.display = "flex";
-    modalImg.src = imgElement.src;
-  }
 
-  function closeLightbox() {
-    document.getElementById('imageModal').style.display = "none";
-  }
-    // Automatically make all product images open in the lightbox
-  document.querySelectorAll('#productGrid img').forEach(img => {
-    img.classList.add('cursor-pointer');
-    img.onclick = function() {
-      openLightbox(this);
-    };
-  });
-</script>
-
-  <!-- Lightbox Modal -->
-<div id="imageModal" onclick="closeLightbox()" class="fixed inset-0 z-50 bg-black/90 hidden items-center justify-center p-4 cursor-pointer">
-  <div class="relative max-w-4xl max-h-[90vh]">
-    <img id="lightboxImg" src="" class="max-w-full max-h-[85vh] object-contain rounded-xl border border-zinc-800">
-    <button onclick="closeLightbox()" class="absolute top-4 right-4 text-white bg-zinc-800 hover:bg-zinc-700 rounded-full w-10 h-10 flex items-center justify-center text-xl font-bold">&times;</button>
-  </div>
-</div>
+        function closeModal() {
+            document.getElementById('imageModal').style.display = "none";
+        }
+    </script>
 </body>
 </html>
